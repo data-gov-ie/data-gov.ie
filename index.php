@@ -1,7 +1,7 @@
 <?php
 /**
  * Base file where everything is configured and dispatched to
- * 
+ *
  * PHP version 5
  *
  * @category  Base
@@ -12,8 +12,8 @@
  * @link      http://deri.org/
  */
 
-define('SITE_DIR', '/var/www/govdata.ie/'); /* Site directory */
-define('LATC_DIR', '/var/www/lib/linked-data-pages/'); /* This package's directory */
+define('SITE_DIR', '/var/www/govdata.ie/');
+define('LATC_DIR', '/var/www/lib/linked-data-pages/');
 define('PAGET_DIR', '/var/www/lib/paget/');
 define('MORIARTY_DIR', '/var/www/lib/moriarty/');
 define('MORIARTY_ARC_DIR', '/var/www/lib/arc2/');

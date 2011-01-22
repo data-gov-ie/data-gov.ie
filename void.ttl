@@ -1,0 +1,66 @@
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix wv: <http://vocab.org/waiver/terms/norms> .
+@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
+@prefix : <#> .
+
+
+<> a void:DatasetDescription;
+    dcterms:title "A voiD Description of the DataGov.IE Dataset" ;
+    dcterms:creator <http://csarven.ca/#i> ;
+    foaf:primaryTopic :DataGovIE .
+
+
+:DataGovIE rdf:type void:Dataset ;
+    void:subset :CSO ;
+    foaf:homepage <http://data-gov.ie/> ;
+    dcterms:title "Irish Government Data" ;
+    dcterms:description "Irish Government Data" .
+
+
+:CSO rdf:type void:Dataset ;
+    foaf:homepage <http://data-gov.ie/> ;
+    dcterms:title "Irish Census Data" ;
+    dcterms:description "Irish Census Data from Central Statistics Office (2006)" ;
+    dcterms:source [ foaf:homepage <http://cso.ie/> ] ;
+    dcterms:publisher [ foaf:homepage <http://deri.ie/> ] ;
+    dcterms:created "2011-01-01"^^xsd:date ;
+
+    void:vocabulary <http://purl.org/linked-data/cube> ,
+                    <http://purl.org/linked-data/sdmx/2009/dimension> ,
+                    <http://reference.data.gov.uk/id/year/> ,
+                    <http://stats.govdata.ie/codelist/age1/> ,
+                    <http://www.w3.org/2004/02/skos/core> ;
+
+    void:subject <http://dbpedia.org/resource/Census> ,
+                 <http://dbpedia.org/resource/Central_Statistics_Office_(Ireland)> ,
+                 <http://dbpedia.org/resource/Microdata_(statistics)> ,
+                 <http://dbpedia.org/resource/Statistical_survey> ;
+
+    void:sparqlEndpoint <http://data-gov.ie/sparql> ;
+    void:dataDump <http://data-gov.ie/datadump/CSO-datasets.tar.zip> ;
+
+    void:feature <http://www.w3.org/ns/formats/RDF_XML> ,
+                 <http://www.w3.org/ns/formats/Turtle> ;
+
+    void:exampleResource <http://geo.data-gov.ie/Province> ,
+                         <http://geo.data-gov.ie/city/galway> ,
+                         <http://stats.data-gov.ie/codelist/birthplace> .
+
+
+:CSO_DBpedia a void:Linkset ;
+    void:target :CSO ;
+    void:target :DBpedia ;
+    void:linkPredicate owl:sameAs ;
+    void:subjectsTarget :CSO ;
+    void:objectsTarget :DBpedia ;
+    void:triples 1 .
+
+
+:DBpedia rdf:type void:Dataset ;
+    foaf:homepage <http://dbpedia.org/> .

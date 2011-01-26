@@ -24,7 +24,6 @@
 
 
 :CSO rdf:type void:Dataset ;
-    foaf:homepage <http://data-gov.ie/> ;
     dcterms:title "Irish Census Data" ;
     dcterms:description "Irish Census Data from Central Statistics Office (2006)" ;
     dcterms:source [ foaf:homepage <http://cso.ie/> ] ;
@@ -32,7 +31,10 @@
     dcterms:created "2011-01-01"^^xsd:date ;
 
     void:vocabulary <http://purl.org/linked-data/cube> ,
+                    <http://purl.org/linked-data/sdmx> ,
+                    <http://purl.org/linked-data/sdmx/2009/code> ,
                     <http://purl.org/linked-data/sdmx/2009/dimension> ,
+                    <http://purl.org/linked-data/sdmx/2009/metadata> ,
                     <http://reference.data.gov.uk/id/year/> ,
                     <http://stats.govdata.ie/codelist/age1/> ,
                     <http://www.w3.org/2004/02/skos/core> ;

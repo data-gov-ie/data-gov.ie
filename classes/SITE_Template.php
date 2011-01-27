@@ -2,7 +2,7 @@
 /**
  * Methods that handle the data in the query result. Usually called from templates.
  */
-class SITE_Template extends LATC_Template
+class SITE_Template extends LDP_Template
 {
     var $sC;
 

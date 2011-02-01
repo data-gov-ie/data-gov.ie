@@ -1,11 +1,10 @@
 <?php
 
-$config['site']['name']   = 'Data Gov.ie'; /*Name of your site. Appears in page title, address etc. */
-$config['site']['server'] = 'govdata.ie';     /* 'site' in http://site */
-$config['site']['path']   = '';         /* 'foo' in http://site/foo */
-$config['site']['base']   = 'http://'.$config['site']['server'].$config['site']['path'];
-$config['site']['theme']  = 'cso';      /* 'default' in /var/www/site/theme/cso */
-$config['site']['logo']   = 'logo_data-gov.ie.png';  /* logo.png in /var/www/site/theme/default/images/logo.jpg */
+$config['site']['name']   = 'Data Gov.ie';          /*Name of your site. Appears in page title, address etc. */
+$config['site']['server'] = 'govdata.ie';           /* 'site' in http://site */
+$config['site']['path']   = '';                     /* '/foo' in http://site/foo */
+$config['site']['theme']  = 'cso';                  /* 'default' in /var/www/site/theme/cso */
+$config['site']['logo']   = 'logo_data-gov.ie.png'; /* 'logo.png' in /var/www/site/theme/default/images/logo.png */
 
 $config['server']['govdata.ie']       = 'govdata.ie';
 $config['server']['geo.govdata.ie']   = 'geo.govdata.ie';

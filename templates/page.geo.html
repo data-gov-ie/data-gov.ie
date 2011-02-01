@@ -18,20 +18,20 @@ require_once SITE_DIR . 'templates/head.html';
 //    echo $this->render(array('value' => $resource_uri, 'type'=>'uri'), FALSE);
 ?>
 
-<div id="usual-residence-population" class="related">
+<div id="usual-residence-population" class="aside">
 <?php
 echo $this->renderUsualResidencePopulation();
 ?>
 </div>
 
-<div id="religion-population" class="related">
+<div id="religion-population" class="aside">
 <?php
 echo $this->renderReligionPopulation();
 ?>
 </div>
 
 
-<div id="marital-status-age-population" class="related">
+<div id="marital-status-age-population" class="aside">
 <?php
 echo $this->renderMaritalStatusAgePopulation();
 ?>
@@ -39,7 +39,7 @@ echo $this->renderMaritalStatusAgePopulation();
     <div id="chart_msap"></div>
 </div>
 
-<div id="birthplace" class="related">
+<div id="birthplace" class="aside">
 <?php
 echo $this->renderBirthplace();
 ?>

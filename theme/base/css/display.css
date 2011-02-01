@@ -287,18 +287,18 @@ display:none;
 
 }
 
-#resource_data .related {
+#resource_data .aside {
 margin-bottom:3em;
 float:left;
 width:46%;
 }
 
-#resource_data .related:nth-child(odd) {
+#resource_data .aside:nth-child(odd) {
 margin-right:8%;
 }
 
 
-#resource_data .related table {
+#resource_data .aside table {
 width:100%;
 }
 

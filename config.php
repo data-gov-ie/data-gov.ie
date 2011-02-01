@@ -6,7 +6,6 @@ $config['site']['path']   = '';                     /* '/foo' in http://site/foo
 $config['site']['theme']  = 'cso';                  /* 'default' in /var/www/site/theme/cso */
 $config['site']['logo']   = 'logo_data-gov.ie.png'; /* 'logo.png' in /var/www/site/theme/default/images/logo.png */
 
-$config['server']['govdata.ie']       = 'govdata.ie';
 $config['server']['geo.govdata.ie']   = 'geo.govdata.ie';
 $config['server']['stats.govdata.ie'] = 'stats.govdata.ie';
 

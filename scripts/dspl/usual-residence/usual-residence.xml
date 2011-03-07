@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dspl xmlns="http://schemas.google.com/dspl/2010"
+    xmlns:geo="http://www.google.com/publicdata/dataset/google/geo"
+    xmlns:time="http://www.google.com/publicdata/dataset/google/time"
+    xmlns:quantity="http://www.google.com/publicdata/dataset/google/quantity"
+    xmlns:entity="http://www.google.com/publicdata/dataset/google/entity">
+
+  <import namespace="http://www.google.com/publicdata/dataset/google/time"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/quantity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/entity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/geo"/>
+
+  <info>
+    <name>
+      <value>IE Statistics - Usual Residence</value>
+    </name>
+    <description>
+      <value>Some very interesting statistics about Ireland</value>
+    </description>
+    <url>
+      <value>http://data-gov.ie/</value>
+    </url>
+  </info>
+
+  <provider>
+    <name>
+      <value>Central Statistics Office</value>
+    </name>
+    <url>
+      <value>http://cso.ie/</value>
+    </url>
+  </provider>
+
+  <topics>
+    <topic id="social_indicators">
+      <info>
+        <name><value>Social indicators</value></name>
+      </info>
+      <topic id="population_indicators">
+        <info>
+          <name><value>Population indicators</value></name>
+        </info>
+      </topic>
+    </topic>
+  </topics>
+
+  <concepts>
+    <concept id="city" extends="geo:location">
+      <info>
+        <name>
+          <value>City</value>
+        </name>
+        <description>
+          <value>IE cities</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <property id="name">
+        <info>
+          <name><value xml:lang="en">Name</value></name>
+          <description>
+            <value xml:lang="en">The official name of the city</value>
+          </description>
+        </info>
+        <type ref="string"/>
+      </property>
+      <table ref="cities_table"/>
+    </concept>
+
+    <concept id="usual-residence" extends="geo:location">
+      <info>
+        <name>
+          <value>Usual Residence</value>
+        </name>
+        <description>
+          <value>People's usual residence</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <property id="name">
+        <info>
+          <name><value xml:lang="en">Name</value></name>
+          <description>
+            <value xml:lang="en">Residence status</value>
+          </description>
+        </info>
+        <type ref="string"/>
+      </property>
+      <table ref="usual-residence_table"/>
+    </concept>
+
+    <concept id="population" extends="quantity:amount">
+      <info>
+        <name>
+          <value>Population</value>
+        </name>
+        <description>
+          <value>Size of the resident population</value>
+        </description>
+      </info>
+      <topic ref="population_indicators"/>
+      <type ref="integer"/>
+    </concept>
+  </concepts>
+
+  <slices>
+    <slice id="usual-residence_slice">
+      <dimension concept="city"/>
+      <dimension concept="usual-residence"/>
+      <dimension concept="time:year"/>
+      <metric concept="population"/>
+      <table ref="usual-residence_slice_table"/>
+    </slice>
+  </slices>
+
+  <tables>
+    <table id="cities_table">
+      <column id="city" type="string"/>
+      <column id="name" type="string"/>
+      <column id="latitude" type="float"/>
+      <column id="longitude" type="float"/>
+      <data>
+        <file format="csv" encoding="utf-8">cities.csv</file>
+      </data>
+    </table>
+
+    <table id="usual-residence_table">
+      <column id="usual-residence" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">usual-residence.csv</file>
+      </data>
+    </table>
+
+    <table id="usual-residence_slice_table">
+      <column id="city" type="string"/>
+      <column id="usual-residence" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="population" type="integer"/>
+      <data>
+        <file format="csv" encoding="utf-8">usual-residence_slice.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>

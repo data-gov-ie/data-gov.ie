@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dspl xmlns="http://schemas.google.com/dspl/2010"
+    xmlns:geo="http://www.google.com/publicdata/dataset/google/geo"
+    xmlns:time="http://www.google.com/publicdata/dataset/google/time"
+    xmlns:quantity="http://www.google.com/publicdata/dataset/google/quantity"
+    xmlns:entity="http://www.google.com/publicdata/dataset/google/entity">
+
+  <import namespace="http://www.google.com/publicdata/dataset/google/time"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/quantity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/entity"/>
+  <import namespace="http://www.google.com/publicdata/dataset/google/geo"/>
+
+  <info>
+    <name>
+      <value>IE Statistics</value>
+    </name>
+    <description>
+      <value>Some very interesting statistics about Ireland</value>
+    </description>
+    <url>
+      <value>http://data-gov.ie/</value>
+    </url>
+  </info>
+
+  <provider>
+    <name>
+      <value>Central Statistics Office</value>
+    </name>
+    <url>
+      <value>http://cso.ie/</value>
+    </url>
+  </provider>
+
+  <topics>
+    <topic id="social_indicators">
+      <info>
+        <name><value>Social indicators</value></name>
+      </info>
+      <topic id="population_indicators">
+        <info>
+          <name><value>Population indicators</value></name>
+        </info>
+      </topic>
+    </topic>
+  </topics>
+
+  <concepts>
+    <concept id="city" extends="geo:location">
+      <info>
+        <name>
+          <value>City</value>
+        </name>
+        <description>
+          <value>IE cities</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <property id="name">
+        <info>
+          <name><value xml:lang="en">Name</value></name>
+          <description>
+            <value xml:lang="en">The official name of the city</value>
+          </description>
+        </info>
+        <type ref="string"/>
+      </property>
+      <table ref="cities_table"/>
+    </concept>
+
+    <concept id="marital-status">
+      <info>
+        <name>
+          <value>Marital Status</value>
+        </name>
+        <description>
+          <value>People's marital status</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <table ref="marital-status_table"/>
+    </concept>
+
+    <concept id="age" extends="entity:entity">
+      <info>
+        <name>
+          <value>Age range</value>
+        </name>
+        <description>
+          <value>People's age range</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <table ref="ages_table"/>
+    </concept>
+
+    <concept id="gender" extends="entity:entity">
+      <info>
+          <name>
+          <value>Gender</value>
+        </name>
+        <description>
+          <value>Gender, Male or Female</value>
+        </description>
+        <pluralName><value>Genders</value></pluralName>
+        <totalName><value>Both genders</value></totalName>
+      </info>
+      <type ref="string"/>
+      <table ref="genders_table"/>
+    </concept>
+
+    <concept id="population" extends="quantity:amount">
+      <info>
+        <name>
+          <value>Population</value>
+        </name>
+        <description>
+          <value>Size of the resident population</value>
+        </description>
+      </info>
+      <topic ref="population_indicators"/>
+      <type ref="integer"/>
+    </concept>
+
+    <concept id="usual-residence" extends="geo:location">
+      <info>
+        <name>
+          <value>Usual Residence</value>
+        </name>
+        <description>
+          <value>People's usual residence</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <property id="name">
+        <info>
+          <name><value xml:lang="en">Name</value></name>
+          <description>
+            <value xml:lang="en">Residence status</value>
+          </description>
+        </info>
+        <type ref="string"/>
+      </property>
+      <table ref="usual-residence_table"/>
+    </concept>
+
+    <concept id="birthplace" extends="geo:location">
+      <info>
+        <name>
+          <value>Birthplace</value>
+        </name>
+        <description>
+          <value>People's birthplace</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <property id="name">
+        <info>
+          <name><value xml:lang="en">Name</value></name>
+          <description>
+            <value xml:lang="en">Place of birth</value>
+          </description>
+        </info>
+        <type ref="string"/>
+      </property>
+      <table ref="birthplace_table"/>
+    </concept>
+
+    <concept id="nationality">
+      <info>
+        <name>
+          <value>Nationality</value>
+        </name>
+        <description>
+          <value>People's nationality</value>
+        </description>
+      </info>
+      <type ref="string"/>
+      <table ref="nationality_table"/>
+    </concept>
+  </concepts>
+
+  <slices>
+    <slice id="gender-age-and-marital-status_slice">
+      <dimension concept="city"/>
+      <dimension concept="marital-status"/>
+      <dimension concept="age"/>
+      <dimension concept="gender"/>
+      <dimension concept="time:year"/>
+      <metric concept="population"/>
+      <table ref="gender-age-and-marital-status_slice_table"/>
+    </slice>
+
+    <slice id="usual-residence_slice">
+      <dimension concept="city"/>
+      <dimension concept="usual-residence"/>
+      <dimension concept="time:year"/>
+      <metric concept="population"/>
+      <table ref="usual-residence_slice_table"/>
+    </slice>
+
+    <slice id="birthplace_slice">
+      <dimension concept="city"/>
+      <dimension concept="birthplace"/>
+      <dimension concept="time:year"/>
+      <metric concept="population"/>
+      <table ref="birthplace_slice_table"/>
+    </slice>
+
+    <slice id="nationality_slice">
+      <dimension concept="city"/>
+      <dimension concept="nationality"/>
+      <dimension concept="time:year"/>
+      <metric concept="population"/>
+      <table ref="nationality_slice_table"/>
+    </slice>
+  </slices>
+
+  <tables>
+    <table id="cities_table">
+      <column id="city" type="string"/>
+      <column id="name" type="string"/>
+      <column id="latitude" type="float"/>
+      <column id="longitude" type="float"/>
+      <data>
+        <file format="csv" encoding="utf-8">cities.csv</file>
+      </data>
+    </table>
+
+    <table id="ages_table">
+      <column id="age" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">ages.csv</file>
+      </data>
+    </table>
+
+    <table id="genders_table">
+      <column id="gender" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">genders.csv</file>
+      </data>
+    </table>
+
+    <table id="marital-status_table">
+      <column id="marital-status" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">marital-status.csv</file>
+      </data>
+    </table>
+
+    <table id="gender-age-and-marital-status_slice_table">
+      <column id="city" type="string"/>
+      <column id="marital-status" type="string"/>
+      <column id="age" type="string"/>
+      <column id="gender" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="population" type="integer"/>
+      <data>
+        <file format="csv" encoding="utf-8">gender-age-and-marital-status_slice.csv</file>
+      </data>
+    </table>
+
+    <table id="usual-residence_table">
+      <column id="usual-residence" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">usual-residence.csv</file>
+      </data>
+    </table>
+
+    <table id="usual-residence_slice_table">
+      <column id="city" type="string"/>
+      <column id="usual-residence" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="population" type="integer"/>
+      <data>
+        <file format="csv" encoding="utf-8">usual-residence_slice.csv</file>
+      </data>
+    </table>
+
+    <table id="birthplace_table">
+      <column id="birthplace" type="string"/>
+      <column id="name" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">birthplace.csv</file>
+      </data>
+    </table>
+
+    <table id="birthplace_slice_table">
+      <column id="city" type="string"/>
+      <column id="birthplace" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="population" type="integer"/>
+      <data>
+        <file format="csv" encoding="utf-8">birthplace_slice.csv</file>
+      </data>
+    </table>
+
+    <table id="nationality_table">
+      <column id="nationality" type="string"/>
+      <data>
+        <file format="csv" encoding="utf-8">nationality.csv</file>
+      </data>
+    </table>
+
+    <table id="nationality_slice_table">
+      <column id="city" type="string"/>
+      <column id="nationality" type="string"/>
+      <column id="year" type="date" format="yyyy"/>
+      <column id="population" type="integer"/>
+      <data>
+        <file format="csv" encoding="utf-8">nationality_slice.csv</file>
+      </data>
+    </table>
+  </tables>
+</dspl>

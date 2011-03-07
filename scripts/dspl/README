@@ -1,0 +1,12 @@
+This directory contains the scripts for Google's Public Explorer [1].
+It is typically used to simplify the visualization of datasets.
+
+It is based on the Google's DSPL [2].
+
+The data within (in the CSVs) contains some of the observations of CSO.
+
+The DSPL dataset description file (an XMLf file) and CSVs are compiled
+by using SPARQL queries to retrieve observations in RDF/XML and applying XSLT.
+
+[1] http://www.google.com/publicdata
+[2] http://code.google.com/apis/publicdata/

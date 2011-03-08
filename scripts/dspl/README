@@ -8,5 +8,9 @@ The data within (in the CSVs) contains some of the observations of CSO.
 The DSPL dataset description file (an XMLf file) and CSVs are compiled
 by using SPARQL queries to retrieve observations in RDF/XML and applying XSLT.
 
+To see these datasets in Google Public Explorer, you need a Google account.
+Simply go to the admin section [3] and upload the zip file.
+
 [1] http://www.google.com/publicdata
 [2] http://code.google.com/apis/publicdata/
+[3] http://www.google.com/publicdata/admin

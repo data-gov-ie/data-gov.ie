@@ -1,0 +1,23 @@
+# Extra statements to store locally
+
+@prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+
+<http://geo.govdata.ie/city/cork>
+    wgs:lat 51.8987643 ;
+    wgs:long -8.4712125 .
+
+<http://geo.govdata.ie/city/dublin>
+    wgs:lat 53.3492787 ;
+    wgs:long -6.2611661 .
+
+<http://geo.govdata.ie/city/galway>
+    wgs:lat 53.2744122 ;
+    wgs:long -9.0490632 .
+
+<http://geo.govdata.ie/city/limerick>
+    wgs:lat 52.6612577 ;
+    wgs:long -8.6302084 .
+
+<http://geo.govdata.ie/city/waterford>
+    wgs:lat 52.2591035 ;
+    wgs:long -7.1137442 .

@@ -1,0 +1,8 @@
+The dataset for DataGov IE is generated from http://github.com/csarven/ie-linked-data
+
+This directory contains extras.ttl file with additional triples.
+The intention is to keep a cached copy, instead of dereferencing every time.
+They are considered to be static, non-changing statements 
+e.g., sdmx-code's sex-F has label "Female", or lat/long of a city.
+
+See also the void.ttl file in base directory.

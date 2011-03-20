@@ -135,6 +135,32 @@ $config['entity']['cso_province']['query']    = 'cso_city';
 $config['entity']['cso_province']['template'] = 'page.geo.html';
 
 
+$config['sparql_query']['dsd'] = "
+CONSTRUCT {
+    ?dsd a qb:DataStructureDefinition .
+    ?dsd qb:dimension ?dimensionProperty .
+    ?dimensionProperty rdfs:label ?dimensionPropertyLabel .
+    ?dsd qb:measure ?measureProperty .
+    ?measureProperty rdfs:label ?measurePropertyLabel .
+}
+WHERE {
+    ?dsd a qb:DataStructureDefinition .
+    ?dsd qb:component ?component .
+    OPTIONAL {
+        ?component qb:dimension ?dimensionProperty .
+        ?dimensionProperty rdfs:label ?dimensionPropertyLabel .
+    }
+    OPTIONAL {
+        ?component qb:measure ?measureProperty .
+        ?measureProperty rdfs:label ?measurePropertyLabel .
+    }
+}
+";
+$config['entity']['dsd']['path']     = '/dsd';
+$config['entity']['dsd']['query']    = 'dsd';
+$config['entity']['dsd']['template'] = 'page.dsd.html';
+
+
 $config['sparql_query']['cso_class'] = "
 CONSTRUCT {
     <URI> ?p1 ?o1 .

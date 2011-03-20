@@ -31,13 +31,27 @@ $config['prefixes'] = array(
 
 /**
  * SPARQL Queries
- * '<URI>' value is auto-assigned from current request URI
- *
  */
-$config['sparql_query']['empty'] = "";
+/* Empty query (temporary) */
+$config['sparql_query']['empty'] = '';
+
+/**
+ * Default query is DESCRIBE
+ * '<URI>' value is auto-assigned from current request URI
+ */
 $config['sparql_query']['default'] = "
     DESCRIBE <URI>
 ";
+/**
+ * Entity Set
+ */
+/* URI path for this entity.*/
+$config['entity']['default']['path']     = '';
+/* SPARQL query to use for this entity e.g., $config['sparql_query']['default'] */
+$config['entity']['default']['query']    = 'default';
+/* HTML template to use for this entity */
+$config['entity']['default']['template'] = 'page.default.html';
+
 
 /**
  * Entity sets can be configured here:

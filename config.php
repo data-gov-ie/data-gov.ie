@@ -161,6 +161,11 @@ $config['entity']['dsd']['query']    = 'dsd';
 $config['entity']['dsd']['template'] = 'page.dsd.html';
 
 
+$config['entity']['dsd_persons-by-birthplace']['path']     = '/dsd/persons-by-birthplace';
+$config['entity']['dsd_persons-by-birthplace']['query']    = 'dsd';
+$config['entity']['dsd_persons-by-birthplace']['template'] = 'page.dsd.html';
+
+
 $config['sparql_query']['cso_class'] = "
 CONSTRUCT {
     <URI> ?p1 ?o1 .

@@ -9,10 +9,70 @@ class SITE_Template extends LDP_Template
     function __construct($template_filename, $desc, $urispace, $request, $sC)
     {
         //XXX: Beginning of DO NOT MODIFY
-        $this->sC = $sC;
         parent::__construct($template_filename, $desc, $urispace, $request, $sC);
         //XXX: End of DO NOT MODIFY
     }
+
+
+    function dataStructureDefinition()
+    {
+        $cR = $this->sC->currentRequest[4];
+
+        $search = '#^(/)(dsd)(/)?(.+)?$#i';
+
+        if (preg_match($search, $cR, $matches)) {
+            if (isset($matches[4])) {
+                return $this->personsBy('dsd:'.$matches[4]);
+            }
+            else {
+                $triples = $this->getTriplesOfType($this->sC->getURI('qb:DataStructureDefinition'));
+                $subjects = $this->getSubjects($triples);
+
+                $properties = null;
+                $objects = null;
+                $triples = $this->getTriples($subjects, $properties, $objects);
+
+                return $this->table_widget->render($triples);
+            }
+        }
+
+        return;
+    }
+
+
+    function personsBy($qname)
+    {
+        $rT = $rD = $rM = '';
+        $triples = $this->getTriples($this->sC->getURI($qname), null, null);
+        $rT = $this->table_widget->render($triples);
+        $this->excludes = array();
+
+        $tD = $this->getDimensions($triples);
+        $this->table_widget->ignore_properties($this->table_widget->property_order);
+        $rD = $this->table_widget->render($tD);
+        $this->excludes = array();
+
+        $tM = $this->getMeasures($triples);
+        $this->table_widget->ignore_properties($this->table_widget->property_order);
+        $rM = $this->table_widget->render($tM);
+
+
+        $this->renderClear();
+
+        return $rT.$rD.$rM;
+    }
+
+
+    function getDimensions($triples)
+    {
+        return $this->getTriples(null, $this->sC->getURI('qb:dimension'), null, $triples);
+    }
+
+    function getMeasures($triples)
+    {
+        return $this->getTriples(null, $this->sC->getURI('qb:measure'), null, $triples);
+    }
+
 
     /*
      * TODO: Change bunch of render*() to renderTabularDimensions($object, $dimensions) or renderDimensions()

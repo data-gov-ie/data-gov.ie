@@ -74,6 +74,174 @@ class SITE_Template extends LDP_Template
     }
 
 
+    function createDSPL()
+    {
+        $qnames = array(
+            'geo'      => 'http://www.google.com/publicdata/dataset/google/geo',
+            'time'     => 'http://www.google.com/publicdata/dataset/google/time',
+            'quantity' => 'http://www.google.com/publicdata/dataset/google/quantity',
+            'entity'   =>'http://www.google.com/publicdata/dataset/google/entity'
+        );
+
+        $this->xw = new XMLWriter();
+        $this->xw->openMemory();
+        $this->xw->setIndent(true);
+        $this->xw->setIndentString('    ');
+        $this->xw->startDocument('1.0', 'UTF-8');
+        $this->xw->startElement('dspl');
+
+        $this->xw->writeAttribute('xmlns', 'http://schemas.google.com/dspl/2010');
+        foreach($qnames as $prefix => $uri) {
+            $this->xw->writeAttribute('xmlns:'.$prefix, $uri);
+        }
+
+        foreach($qnames as $prefix => $uri) {
+            $this->xw->startElement('import');
+            $this->xw->writeAttribute('namespace', $uri);
+            $this->xw->endElement();
+        }
+
+        $this->createDSPLInfo();
+        $this->createDSPLProvider();
+        $this->createDSPLTopics();
+
+        $this->createDSPLConcepts();
+//        $s = createDSPLSlices($triples)
+//        $t = createDSPLTables();
+
+        $this->xw->endElement();
+        $this->xw->endDocument();
+        return $this->xw->outputMemory();
+    }
+
+    function createDSPLInfo()
+    {
+
+    }
+
+    function createDSPLProvider()
+    {
+
+    }
+
+    function createDSPLTopics()
+    {
+
+    }
+
+    function createDSPLConcepts()
+    {
+        $concepts = array();
+        $this->xw->startElement('concepts');
+
+        $subjects = null;
+        $properties = $this->sC->getURI('qb:measure');
+        $objects = $this->sC->getURI('property:population');
+        $triples = $this->getTriples($subjects, $properties, $objects);
+        if (count($triples) > 0) {
+            $this->createConceptPopulation();
+        }
+
+        $subjects = null;
+        $properties = $this->sC->getURI('qb:dimension');
+        $objects = $this->sC->getURI('property:birthplace');
+        $triples = $this->getTriples($subjects, $properties, $objects);
+        if (count($triples) > 0) {
+            $this->createConceptBirthplace();
+        }
+
+        $this->xw->endElement();
+    }
+
+    function createDSPLSlices($triples)
+    {
+
+    }
+
+    function createDSPLTables()
+    {
+
+    }
+
+
+    function createConceptPopulation()
+    {
+        $this->xw->startElement('concept');
+
+        $this->xw->writeAttribute('id', 'population');
+        $this->xw->writeAttribute('extends', 'quantity:amount');
+
+        $this->xw->startElement('info');
+        $this->xw->startElement('name');
+        $this->xw->writeElement('value', $this->getValue($this->sC->getPrefix('property').'population', 'rdfs:label'));
+        $this->xw->endElement();
+        $this->xw->startElement('description');
+        /*TODO: Use sdmx-concept:statPop's rdfs:label instead?*/
+        $this->xw->writeElement('value', 'Statistical population');
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->startElement('topic');
+        $this->xw->writeAttribute('ref', 'population_indicators');
+        $this->xw->endElement();
+
+        $this->xw->startElement('type');
+        $this->xw->writeAttribute('ref', 'integer');
+        $this->xw->endElement();
+
+        $this->xw->endElement();
+    }
+
+
+    function createConceptBirthplace()
+    {
+        $this->xw->startElement('concept');
+
+        $this->xw->writeAttribute('id', 'birthplace');
+        $this->xw->writeAttribute('extends', 'geo:location');
+
+        $this->xw->startElement('info');
+        $this->xw->startElement('name');
+        $this->xw->writeElement('value', $this->getValue($this->sC->getPrefix('property').'birthplace', 'rdfs:label'));
+        $this->xw->endElement();
+        $this->xw->startElement('description');
+        /*TODO: Use sdmx-concept:refArea's rdfs:label instead?*/
+        $this->xw->writeElement('value', "People's birthplace");
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->startElement('type');
+        $this->xw->writeAttribute('ref', 'string');
+        $this->xw->endElement();
+
+        $this->xw->startElement('property');
+        $this->xw->startElement('info');
+        $this->xw->startElement('name');
+        $this->xw->startElement('value');
+        $this->xw->writeAttribute('xml:lang', 'en');
+        $this->xw->text('Name');
+        $this->xw->endElement();
+        $this->xw->endElement();
+        $this->xw->startElement('description');
+        $this->xw->startElement('value');
+        $this->xw->writeAttribute('xml:lang', 'en');
+        $this->xw->text('Place of birth');
+        $this->xw->endElement();
+        $this->xw->endElement();
+        $this->xw->endElement();
+        $this->xw->startElement('type');
+        $this->xw->writeAttribute('ref', 'string');
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->startElement('table');
+        $this->xw->writeAttribute('ref', 'birthplace_table');
+        $this->xw->endElement();
+
+        $this->xw->endElement();
+    }
+
+
     /*
      * TODO: Change bunch of render*() to renderTabularDimensions($object, $dimensions) or renderDimensions()
      * Perhaps $object is a uri, 

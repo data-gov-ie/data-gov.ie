@@ -17,14 +17,19 @@ $config['prefixes'] = array(
     'rdfs'              => 'http://www.w3.org/2000/01/rdf-schema#',
     'xsd'               => 'http://www.w3.org/2001/XMLSchema#',
     'skos'              => 'http://www.w3.org/2004/02/skos/core#',
+    'wgs'               => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
 
+    'sdmx'              => 'http://purl.org/linked-data/sdmx#',
     'sdmx-concept'      => 'http://purl.org/linked-data/sdmx/2009/concept#',
     'sdmx-dimension'    => 'http://purl.org/linked-data/sdmx/2009/dimension#',
     'qb'                => 'http://purl.org/linked-data/cube#',
 
+    'year'         => 'http://reference.data.gov.uk/id/year/',
+
     'statsDataGov' => 'http://stats.govdata.ie/',
     'concept'      => 'http://stats.govdata.ie/concept/',
     'codelist'     => 'http://stats.govdata.ie/codelist/',
+    'dsd'          => 'http://stats.govdata.ie/dsd/',
     'property'     => 'http://stats.govdata.ie/property/',
     'geoDataGov'   => 'http://geo.govdata.ie/'
 );

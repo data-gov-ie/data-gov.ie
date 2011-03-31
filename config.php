@@ -101,7 +101,7 @@ $config['entity']['cso_codelist']['path']     = '/codelist';
 $config['entity']['cso_codelist']['query']    = 'default';
 $config['entity']['cso_codelist']['template'] = 'page.default.html';
 
-$config['sparql_query']['cso_city'] = "
+$config['sparql_query']['cso_geoArea'] = "
 CONSTRUCT {
     ?s ?geoArea <URI> .
     ?s ?p ?o .
@@ -125,13 +125,13 @@ WHERE {
     }
 }
 ";
-$config['entity']['cso_city']['path']     = '/city';
-$config['entity']['cso_city']['query']    = 'cso_city';
-$config['entity']['cso_city']['template'] = 'page.geo.html';
+$config['entity']['cso_geoArea']['path']     = '/city';
+$config['entity']['cso_geoArea']['query']    = 'cso_geoArea';
+$config['entity']['cso_geoArea']['template'] = 'page.geo.html';
 
 
 $config['entity']['cso_province']['path']     = '/province';
-$config['entity']['cso_province']['query']    = 'cso_city';
+$config['entity']['cso_province']['query']    = 'cso_geoArea';
 $config['entity']['cso_province']['template'] = 'page.geo.html';
 
 

@@ -182,9 +182,18 @@ class SITE_Template extends LDP_Template
     }
 
 
+    function createConceptType($type)
+    {
+        $this->xw->startElement('type');
+        $this->xw->writeAttribute('ref', $type);
+        $this->xw->endElement();
+    }
+
+
     function createConceptPopulation()
     {
         $id = 'population';
+        $type = 'integer';
 
         $this->xw->startElement('concept');
 
@@ -193,13 +202,13 @@ class SITE_Template extends LDP_Template
 
         $this->createConceptInfo($id);
 
+        $this->createConceptType($type);
+
         $this->xw->startElement('topic');
         $this->xw->writeAttribute('ref', 'population_indicators');
         $this->xw->endElement();
 
-        $this->xw->startElement('type');
-        $this->xw->writeAttribute('ref', 'integer');
-        $this->xw->endElement();
+
 
         $this->xw->endElement();
     }
@@ -208,6 +217,7 @@ class SITE_Template extends LDP_Template
     function createConceptBirthplace()
     {
         $id = 'birthplace';
+        $type = 'string';
 
         $this->xw->startElement('concept');
 
@@ -216,9 +226,7 @@ class SITE_Template extends LDP_Template
 
         $this->createConceptInfo($id);
 
-        $this->xw->startElement('type');
-        $this->xw->writeAttribute('ref', 'string');
-        $this->xw->endElement();
+        $this->createConceptType($type);
 
         $this->xw->startElement('property');
         $this->xw->startElement('info');

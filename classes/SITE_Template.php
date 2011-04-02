@@ -153,10 +153,43 @@ class SITE_Template extends LDP_Template
         $this->xw->endElement();
     }
 
+
     function createDSPLSlices($triples)
     {
+        $cR = $this->sC->currentRequest[4];
 
+        $triples = $this->getTriples($cR, null, null);
+        $dimensions = $this->getDimensions($triples);
+        $measures = $this->getDimensions($triples);
     }
+
+
+    function createSlice($id, $dimensions, $metrics, $table)
+    {
+
+    
+    }
+
+
+    function createSliceDimension()
+    {
+    
+    }
+
+
+    function createSliceMetric()
+    {
+    
+    
+    }
+
+
+    function createsliceTable()
+    {
+    
+    
+    }
+
 
     function createDSPLTables()
     {

@@ -80,7 +80,7 @@ class SITE_Template extends LDP_Template
             'geo'      => 'http://www.google.com/publicdata/dataset/google/geo',
             'time'     => 'http://www.google.com/publicdata/dataset/google/time',
             'quantity' => 'http://www.google.com/publicdata/dataset/google/quantity',
-            'entity'   =>'http://www.google.com/publicdata/dataset/google/entity'
+            'entity'   => 'http://www.google.com/publicdata/dataset/google/entity'
         );
 
         $this->xw = new XMLWriter();
@@ -164,22 +164,34 @@ class SITE_Template extends LDP_Template
     }
 
 
-    function createConceptPopulation()
-    {
-        $this->xw->startElement('concept');
-
-        $this->xw->writeAttribute('id', 'population');
-        $this->xw->writeAttribute('extends', 'quantity:amount');
-
+    function createConceptInfo($id) {
         $this->xw->startElement('info');
         $this->xw->startElement('name');
-        $this->xw->writeElement('value', $this->getValue($this->sC->getPrefix('property').'population', 'rdfs:label'));
+        $this->xw->writeElement('value', $this->getValue($this->sC->getPrefix('property').$id, 'rdfs:label'));
         $this->xw->endElement();
         $this->xw->startElement('description');
-        /*TODO: Use sdmx-concept:statPop's rdfs:label instead?*/
-        $this->xw->writeElement('value', 'Statistical population');
+        $concept = $this->getValue($this->sC->getPrefix('property').$id, 'qb:concept');
+
+        $conceptLabel = $this->getValue($concept, 'rdfs:label');
+        if (empty($conceptLabel)) {
+            $conceptLabel = $this->getValue($concept, 'skos:prefLabel');
+        }
+        $this->xw->writeElement('value', $conceptLabel);
         $this->xw->endElement();
         $this->xw->endElement();
+    }
+
+
+    function createConceptPopulation()
+    {
+        $id = 'population';
+
+        $this->xw->startElement('concept');
+
+        $this->xw->writeAttribute('id', $id);
+        $this->xw->writeAttribute('extends', 'quantity:amount');
+
+        $this->createConceptInfo($id);
 
         $this->xw->startElement('topic');
         $this->xw->writeAttribute('ref', 'population_indicators');
@@ -195,20 +207,14 @@ class SITE_Template extends LDP_Template
 
     function createConceptBirthplace()
     {
+        $id = 'birthplace';
+
         $this->xw->startElement('concept');
 
-        $this->xw->writeAttribute('id', 'birthplace');
+        $this->xw->writeAttribute('id', $id);
         $this->xw->writeAttribute('extends', 'geo:location');
 
-        $this->xw->startElement('info');
-        $this->xw->startElement('name');
-        $this->xw->writeElement('value', $this->getValue($this->sC->getPrefix('property').'birthplace', 'rdfs:label'));
-        $this->xw->endElement();
-        $this->xw->startElement('description');
-        /*TODO: Use sdmx-concept:refArea's rdfs:label instead?*/
-        $this->xw->writeElement('value', "People's birthplace");
-        $this->xw->endElement();
-        $this->xw->endElement();
+        $this->createConceptInfo($id);
 
         $this->xw->startElement('type');
         $this->xw->writeAttribute('ref', 'string');

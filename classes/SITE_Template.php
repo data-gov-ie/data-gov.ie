@@ -164,20 +164,40 @@ class SITE_Template extends LDP_Template
     }
 
 
-    function createConceptInfo($id) {
+    function createConceptInfo($id, $id_property = null) {
         $this->xw->startElement('info');
         $this->xw->startElement('name');
-        $this->xw->writeElement('value', $this->getValue($this->sC->getPrefix('property').$id, 'rdfs:label'));
+        $this->xw->startElement('value');
+        $this->xw->writeAttribute('xml:lang', 'en');
+
+        if (is_null($id_property)) {
+            $this->xw->text($this->getValue($this->sC->getPrefix('property').$id, 'rdfs:label'));
+        }
+        else {
+            $this->xw->text(ucwords($id_property));
+        }
+        $this->xw->endElement();
         $this->xw->endElement();
         $this->xw->startElement('description');
+        $this->xw->startElement('value');
+        $this->xw->writeAttribute('xml:lang', 'en');
         $concept = $this->getValue($this->sC->getPrefix('property').$id, 'qb:concept');
-
         $conceptLabel = $this->getValue($concept, 'rdfs:label');
         if (empty($conceptLabel)) {
             $conceptLabel = $this->getValue($concept, 'skos:prefLabel');
         }
-        $this->xw->writeElement('value', $conceptLabel);
+        $this->xw->text($conceptLabel);
         $this->xw->endElement();
+        $this->xw->endElement();
+        $this->xw->endElement();
+    }
+
+
+    function createConceptPropertyInfo($id_property, $id)
+    {
+        $this->xw->startElement('property');
+        $this->xw->writeAttribute('id', $id_property);
+        $this->createConceptInfo($id, $id_property);
         $this->xw->endElement();
     }
 
@@ -230,6 +250,7 @@ class SITE_Template extends LDP_Template
     function createConceptBirthplace()
     {
         $id = 'birthplace';
+        $id_property = 'name';
         $type = 'string';
         $table = $id.'_table';
 
@@ -242,25 +263,7 @@ class SITE_Template extends LDP_Template
 
         $this->createConceptType($type);
 
-        $this->xw->startElement('property');
-        $this->xw->startElement('info');
-        $this->xw->startElement('name');
-        $this->xw->startElement('value');
-        $this->xw->writeAttribute('xml:lang', 'en');
-        $this->xw->text('Name');
-        $this->xw->endElement();
-        $this->xw->endElement();
-        $this->xw->startElement('description');
-        $this->xw->startElement('value');
-        $this->xw->writeAttribute('xml:lang', 'en');
-        $this->xw->text('Place of birth');
-        $this->xw->endElement();
-        $this->xw->endElement();
-        $this->xw->endElement();
-
-        $this->createConceptType($type);
-
-        $this->xw->endElement();
+        $this->createConceptPropertyInfo($id_property, $id);
 
         $this->createConceptTable($table);
 

@@ -158,9 +158,11 @@ class SITE_Template extends LDP_Template
     {
         $cR = $this->sC->currentRequest[4];
 
-        $triples = $this->getTriples($cR, null, null);
-        $dimensions = $this->getDimensions($triples);
-        $measures = $this->getDimensions($triples);
+        $tD = $this->getTriples($cR, $this->sC->getURI('qb:dimension'), null);
+        $dimensions = $this->getProperties($tD);
+
+        $tM = $this->getTriples($cR, $this->sC->getURI('qb:measure'), null);
+        $dimensions = $this->getProperties($tM);
     }
 
 

@@ -47,12 +47,12 @@ class SITE_Template extends LDP_Template
         $rT = $this->table_widget->render($triples);
         $this->excludes = array();
 
-        $tD = $this->getDimensions($triples);
+        $tD = $this->getTriplesDimensions($triples);
         $this->table_widget->ignore_properties($this->table_widget->property_order);
         $rD = $this->table_widget->render($tD);
         $this->excludes = array();
 
-        $tM = $this->getMeasures($triples);
+        $tM = $this->getTriplesMeasures($triples);
         $this->table_widget->ignore_properties($this->table_widget->property_order);
         $rM = $this->table_widget->render($tM);
 
@@ -63,12 +63,12 @@ class SITE_Template extends LDP_Template
     }
 
 
-    function getDimensions($triples)
+    function getTriplesDimensions($triples)
     {
         return $this->getTriples(null, $this->sC->getURI('qb:dimension'), null, $triples);
     }
 
-    function getMeasures($triples)
+    function getTriplesMeasures($triples)
     {
         return $this->getTriples(null, $this->sC->getURI('qb:measure'), null, $triples);
     }
@@ -166,8 +166,12 @@ class SITE_Template extends LDP_Template
 
     function createSlice($id, $dimensions, $metrics, $table)
     {
-
-    
+        $this->xw->startElement('slice');
+        foreach($dimensions as $dimension) {
+            $this->createSliceDimension();
+        }
+        $this->createSliceMeasure();
+        $this->xw->endElement();
     }
 
 
@@ -177,7 +181,7 @@ class SITE_Template extends LDP_Template
     }
 
 
-    function createSliceMetric()
+    function createSliceMeasure()
     {
     
     

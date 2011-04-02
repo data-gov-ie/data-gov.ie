@@ -190,10 +190,18 @@ class SITE_Template extends LDP_Template
     }
 
 
-    function createConceptTopic($id)
+    function createConceptTopic($topic)
     {
         $this->xw->startElement('topic');
-        $this->xw->writeAttribute('ref', $id);
+        $this->xw->writeAttribute('ref', $topic);
+        $this->xw->endElement();
+    }
+
+
+    function createConceptTable($table)
+    {
+        $this->xw->startElement('table');
+        $this->xw->writeAttribute('ref', $table);
         $this->xw->endElement();
     }
 
@@ -223,6 +231,7 @@ class SITE_Template extends LDP_Template
     {
         $id = 'birthplace';
         $type = 'string';
+        $table = $id.'_table';
 
         $this->xw->startElement('concept');
 
@@ -253,9 +262,7 @@ class SITE_Template extends LDP_Template
 
         $this->xw->endElement();
 
-        $this->xw->startElement('table');
-        $this->xw->writeAttribute('ref', 'birthplace_table');
-        $this->xw->endElement();
+        $this->createConceptTable($table);
 
         $this->xw->endElement();
     }

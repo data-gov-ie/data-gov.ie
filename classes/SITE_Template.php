@@ -40,6 +40,22 @@ class SITE_Template extends LDP_Template
     }
 
 
+    function getCurrentDSD()
+    {
+        $cR = $this->sC->currentRequest[4];
+
+        $search = '#^(/)(dsd)(/)?(.+)?$#i';
+
+        if (preg_match($search, $cR, $matches)) {
+            if (isset($matches[4])) {
+                return $this->sC->getURI('dsd:'.$matches[4]);
+            }
+        }
+
+        return;
+    }
+
+
     function personsBy($qname)
     {
         $rT = $rD = $rM = '';
@@ -132,8 +148,17 @@ class SITE_Template extends LDP_Template
     function createDSPLConcepts()
     {
         $concepts = array();
+        $subject = $this->getCurrentDSD();
+
         $this->xw->startElement('concepts');
 
+        $tD = $this->getTriples($subject, $this->sC->getURI('qb:dimension'), null);
+        $dimensions = $this->getObjects($tD);
+
+        $tM = $this->getTriples($subject, $this->sC->getURI('qb:measure'), null);
+        $measures = $this->getObjects($tM);
+
+/*
         $subjects = null;
         $properties = $this->sC->getURI('qb:measure');
         $objects = $this->sC->getURI('property:population');
@@ -149,6 +174,7 @@ class SITE_Template extends LDP_Template
         if (count($triples) > 0) {
             $this->createConceptBirthplace();
         }
+*/
 
         $this->xw->endElement();
     }
@@ -162,7 +188,7 @@ class SITE_Template extends LDP_Template
         $dimensions = $this->getProperties($tD);
 
         $tM = $this->getTriples($cR, $this->sC->getURI('qb:measure'), null);
-        $dimensions = $this->getProperties($tM);
+        $measures = $this->getProperties($tM);
     }
 
 
@@ -283,6 +309,13 @@ class SITE_Template extends LDP_Template
         $this->createConceptTopic($topic);
 
         $this->xw->endElement();
+    }
+
+
+    function createConcept()
+    {
+        //dimensions
+        //measures
     }
 
 

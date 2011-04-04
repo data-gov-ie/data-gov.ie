@@ -59,6 +59,7 @@ class SITE_Template extends LDP_Template
     function personsBy($qname)
     {
         $rT = $rD = $rM = '';
+
         $triples = $this->getTriples($this->sC->getURI($qname), null, null);
         $rT = $this->table_widget->render($triples);
         $this->excludes = array();
@@ -71,7 +72,6 @@ class SITE_Template extends LDP_Template
         $tM = $this->getTriplesMeasures($triples);
         $this->table_widget->ignore_properties($this->table_widget->property_order);
         $rM = $this->table_widget->render($tM);
-
 
         $this->renderClear();
 
@@ -147,36 +147,153 @@ class SITE_Template extends LDP_Template
 
     function createDSPLConcepts()
     {
-        $concepts = array();
         $subject = $this->getCurrentDSD();
 
         $this->xw->startElement('concepts');
+        $this->createConcepts($subject);
+        $this->xw->endElement();
+    }
 
-        $tD = $this->getTriples($subject, $this->sC->getURI('qb:dimension'), null);
-        $dimensions = $this->getObjects($tD);
 
-        $tM = $this->getTriples($subject, $this->sC->getURI('qb:measure'), null);
-        $measures = $this->getObjects($tM);
+    function createConcepts($subject)
+    {
+        $triples = $this->getTriples($subject, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure')));
+        $dm = $this->getObjects($triples);
 
-/*
-        $subjects = null;
-        $properties = $this->sC->getURI('qb:measure');
-        $objects = $this->sC->getURI('property:population');
-        $triples = $this->getTriples($subjects, $properties, $objects);
-        if (count($triples) > 0) {
-            $this->createConceptPopulation();
+        $concept = array();
+
+        foreach ($dm as $i) {
+            $concept = $this->buildConcept($i);
+
+            $this->xw->startElement('concept');
+
+            $this->xw->writeAttribute('id', $concept['id']);
+//        $this->xw->writeAttribute('extends', 'quantity:amount');
+            $this->createInfo($concept);
+            $this->createConceptType($concept);
+            $this->createConceptProperty($concept);
+            $this->createConceptTopic($concept);
+            $this->createConceptTable($concept);
+
+            $this->xw->endElement();
+        }
+    }
+
+
+    function buildConcept($dm)
+    {
+        $tDM = $this->getTriples($dm, $this->sC->getURI('qb:concept'));
+        $concept = $this->getObjects($tDM);
+
+        $label = $this->getValue($concept[0], 'rdfs:label');
+        //XXX: This is simple. Revisit when there is a issue
+        $id = strtolower(str_replace(' ', '-', $label));
+
+        $tR = $this->getTriples($dm, $this->sC->getURI('rdfs:range'));
+        $range = $this->getObjects($tR);
+        $range = isset($range[0]) ? $range[0] : '';
+
+        switch($range) {
+            case $this->sC->getURI('xsd:int'):
+                $type = 'integer';
+                break;
+            default:
+                $type = 'string';
+                break;
         }
 
-        $subjects = null;
-        $properties = $this->sC->getURI('qb:dimension');
-        $objects = $this->sC->getURI('property:birthplace');
-        $triples = $this->getTriples($subjects, $properties, $objects);
-        if (count($triples) > 0) {
-            $this->createConceptBirthplace();
-        }
-*/
+        return array(
+            'id' => $id,
+            'info' => array(
+                'name' => $label,
+                //XXX: Perhaps this can be different.
+                'description' => $label,
+                'url' => $concept[0]
+            ),
+            'type' => $type,
+            'topic' => '',
+            'property' => array(
+                'id' => '',
+                'info' => array(
+                    'name' => '',
+                    'description', '',
+                    'url' => ''
+                ),
+                'concept' => ''
+            ),
+            'table' => $id.'_table'
+        );
+    }
+
+
+    /**
+     * FIXME: xml:lang value is hard-coded to 'en'
+     */
+    function createInfo($concept) {
+        $this->xw->startElement('info');
+
+        $this->xw->startElement('name');
+        $this->xw->startElement('value');
+        $this->xw->writeAttribute('xml:lang', 'en');
+        $this->xw->text($concept['info']['name']);
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->startElement('description');
+        $this->xw->startElement('value');
+        $this->xw->writeAttribute('xml:lang', 'en');
+        $this->xw->text($concept['info']['description']);
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->startElement('url');
+        $this->xw->startElement('value');
+        $this->xw->text($concept['info']['url']);
+        $this->xw->endElement();
+        $this->xw->endElement();
 
         $this->xw->endElement();
+    }
+
+
+    function createConceptType($concept)
+    {
+        $this->xw->startElement('type');
+        $this->xw->writeAttribute('ref', $concept['type']);
+        $this->xw->endElement();
+    }
+
+
+    function createConceptTopic($concept)
+    {
+        if (!empty($concept['topic'])) {
+            $this->xw->startElement('topic');
+            $this->xw->writeAttribute('ref', $concept['topic']);
+            $this->xw->endElement();
+        }
+    }
+
+
+    function createConceptTable($concept)
+    {
+        if (!empty($concept['table'])) {
+            $this->xw->startElement('table');
+            $this->xw->writeAttribute('ref', $concept['table']);
+            $this->xw->endElement();
+        }
+    }
+
+
+    function createConceptProperty($concept)
+    {
+        if (!empty($concept['property']['id'])) {
+            $this->xw->startElement('property');
+            $this->xw->writeAttribute('id', $concept['property']['id']);
+            if (!empty($concept['property']['info']['name'])) {
+                $this->createInfo($concept['property']);
+            }
+            $this->xw->endElement();
+        }
     }
 
 
@@ -205,141 +322,21 @@ class SITE_Template extends LDP_Template
 
     function createSliceDimension()
     {
-    
     }
 
 
     function createSliceMeasure()
     {
-    
-    
     }
 
 
     function createsliceTable()
     {
-    
-    
     }
 
 
     function createDSPLTables()
     {
-
-    }
-
-
-    function createConceptInfo($id, $id_property = null) {
-        $this->xw->startElement('info');
-        $this->xw->startElement('name');
-        $this->xw->startElement('value');
-        $this->xw->writeAttribute('xml:lang', 'en');
-
-        if (is_null($id_property)) {
-            $this->xw->text($this->getValue($this->sC->getPrefix('property').$id, 'rdfs:label'));
-        }
-        else {
-            $this->xw->text(ucwords($id_property));
-        }
-        $this->xw->endElement();
-        $this->xw->endElement();
-        $this->xw->startElement('description');
-        $this->xw->startElement('value');
-        $this->xw->writeAttribute('xml:lang', 'en');
-        $concept = $this->getValue($this->sC->getPrefix('property').$id, 'qb:concept');
-        $conceptLabel = $this->getValue($concept, 'rdfs:label');
-        if (empty($conceptLabel)) {
-            $conceptLabel = $this->getValue($concept, 'skos:prefLabel');
-        }
-        $this->xw->text($conceptLabel);
-        $this->xw->endElement();
-        $this->xw->endElement();
-        $this->xw->endElement();
-    }
-
-
-    function createConceptPropertyInfo($id_property, $id)
-    {
-        $this->xw->startElement('property');
-        $this->xw->writeAttribute('id', $id_property);
-        $this->createConceptInfo($id, $id_property);
-        $this->xw->endElement();
-    }
-
-
-    function createConceptType($type)
-    {
-        $this->xw->startElement('type');
-        $this->xw->writeAttribute('ref', $type);
-        $this->xw->endElement();
-    }
-
-
-    function createConceptTopic($topic)
-    {
-        $this->xw->startElement('topic');
-        $this->xw->writeAttribute('ref', $topic);
-        $this->xw->endElement();
-    }
-
-
-    function createConceptTable($table)
-    {
-        $this->xw->startElement('table');
-        $this->xw->writeAttribute('ref', $table);
-        $this->xw->endElement();
-    }
-
-
-    function createConceptPopulation()
-    {
-        $id = 'population';
-        $type = 'integer';
-        $topic = $id.'_indicators';
-
-        $this->xw->startElement('concept');
-
-        $this->xw->writeAttribute('id', $id);
-        $this->xw->writeAttribute('extends', 'quantity:amount');
-
-        $this->createConceptInfo($id);
-
-        $this->createConceptType($type);
-
-        $this->createConceptTopic($topic);
-
-        $this->xw->endElement();
-    }
-
-
-    function createConcept()
-    {
-        //dimensions
-        //measures
-    }
-
-
-    function createConceptBirthplace()
-    {
-        $id = 'birthplace';
-        $id_property = 'name';
-        $type = 'string';
-        $table = $id.'_table';
-
-        $this->xw->startElement('concept');
-
-        $this->xw->writeAttribute('id', $id);
-        $this->xw->writeAttribute('extends', 'geo:location');
-
-        $this->createConceptInfo($id);
-
-        $this->createConceptType($type);
-
-        $this->createConceptPropertyInfo($id_property, $id);
-
-        $this->createConceptTable($table);
-
-        $this->xw->endElement();
     }
 
 

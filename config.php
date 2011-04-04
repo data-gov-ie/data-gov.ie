@@ -101,13 +101,14 @@ $config['entity']['cso_codelist']['path']     = '/codelist';
 $config['entity']['cso_codelist']['query']    = 'default';
 $config['entity']['cso_codelist']['template'] = 'page.default.html';
 
+
 $config['sparql_query']['cso_geoArea'] = "
 CONSTRUCT {
-    ?s ?geoArea <URI> .
     ?s ?p ?o .
-
     ?o a skos:Concept .
     ?o skos:prefLabel ?o_prefLabel .
+    ?o rdfs:label ?label .
+
     <URI> ?p0 ?o0 .
 }
 WHERE {
@@ -117,6 +118,9 @@ WHERE {
         OPTIONAL {
             ?o a skos:Concept .
             ?o skos:prefLabel ?o_prefLabel .
+        }
+        OPTIONAL {
+            ?o rdfs:label ?label .
         }
     }
     UNION
@@ -138,21 +142,53 @@ $config['entity']['cso_province']['template'] = 'page.geo.html';
 $config['sparql_query']['dsd'] = "
 CONSTRUCT {
     ?dsd a qb:DataStructureDefinition .
+
     ?dsd qb:dimension ?dimensionProperty .
     ?dimensionProperty rdfs:label ?dimensionPropertyLabel .
+    ?dimensionProperty qb:concept ?dimensionConcept .
+    ?dimensionProperty rdfs:range ?dimensionPropertyRange .
+    ?dimensionConcept rdfs:label ?dimensionConceptLabel .
+
     ?dsd qb:measure ?measureProperty .
     ?measureProperty rdfs:label ?measurePropertyLabel .
+    ?measureProperty qb:concept ?measureConcept .
+    ?measureProperty rdfs:range ?measurePropertyRange .
+    ?measureConcept rdfs:label ?measureConceptLabel .
+
 }
 WHERE {
     ?dsd a qb:DataStructureDefinition .
     ?dsd qb:component ?component .
+
     OPTIONAL {
         ?component qb:dimension ?dimensionProperty .
         ?dimensionProperty rdfs:label ?dimensionPropertyLabel .
+        ?dimensionProperty qb:concept ?dimensionConcept .
+        OPTIONAL {
+            ?dimensionProperty rdfs:range ?dimensionPropertyRange .
+        }
+        {
+            ?dimensionConcept rdfs:label ?dimensionConceptLabel .
+        }
+        UNION
+        {
+            ?dimensionConcept skos:prefLabel ?dimensionConceptLabel .
+        }
     }
     OPTIONAL {
         ?component qb:measure ?measureProperty .
         ?measureProperty rdfs:label ?measurePropertyLabel .
+        ?measureProperty qb:concept ?measureConcept .
+        OPTIONAL {
+            ?measureProperty rdfs:range ?measurePropertyRange .
+        }
+        {
+            ?measureConcept rdfs:label ?measureConceptLabel .
+        }
+        UNION
+        {
+            ?measureConcept skos:prefLabel ?measureConceptLabel .
+        }
     }
 }
 ";

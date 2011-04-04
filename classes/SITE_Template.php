@@ -4,7 +4,7 @@
  */
 class SITE_Template extends LDP_Template
 {
-    var $sC, $dspl;
+    var $sC, $dspl, $currentDSDPrefixValue;
 
     function __construct($template_filename, $desc, $urispace, $request, $sC)
     {
@@ -48,6 +48,8 @@ class SITE_Template extends LDP_Template
 
         if (preg_match($search, $cR, $matches)) {
             if (isset($matches[4])) {
+                $this->currentDSDPrefixValue = $matches[4];
+
                 return $this->sC->getURI('dsd:'.$matches[4]);
             }
         }
@@ -135,11 +137,16 @@ class SITE_Template extends LDP_Template
 
     function createDSPLData()
     {
-        $subject = $this->getCurrentDSD();
+        $dimensionPropertyURI = $this->sC->getURI('qb:dimension');
+        $measurePropertyURI = $this->sC->getURI('qb:measure');
+        $attributePropertyURI = $this->sC->getURI('qb:attribute');
 
-        $triples = $this->getTriples($subject, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure'), $this->sC->getURI('qb:attribute')));
+        $DSDURI = $this->getCurrentDSD();
+        $DSDPV = $this->currentDSDPrefixValue;
 
-        foreach($triples as $po) {
+        $triples = $this->getTriples($DSDURI, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure'), $this->sC->getURI('qb:attribute')));
+
+        foreach($triples as $s => $po) {
             foreach($po as $p => $o) {
                 foreach($o as $o_key) {
                     $concept = $this->getValue($o_key['value'], 'qb:concept');
@@ -182,6 +189,25 @@ class SITE_Template extends LDP_Template
                         ),
                         'table' => $id.'_table'
                     );
+
+                    switch($p) {
+                        case $dimensionPropertyURI:
+                            $this->dspl['slices'][$DSDPV.'_slice']['dimensions'][] = $id;
+                            break;
+
+                        case $measurePropertyURI:
+                            $this->dspl['slices'][$DSDPV.'_slice']['measures'][] = $id;
+                            break;
+
+                        case $attributePropertyURI:
+                            $this->dspl['slices'][$DSDPV.'_slice']['attributes'][] = $id;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    $this->dspl['slices'][$DSDPV.'_slice']['table'] = $DSDPV.'_slice_table';
                 }
             }
         }

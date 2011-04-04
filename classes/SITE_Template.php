@@ -137,52 +137,55 @@ class SITE_Template extends LDP_Template
     {
         $subject = $this->getCurrentDSD();
 
-        $triples = $this->getTriples($subject, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure')));
-        $dm = $this->getObjects($triples);
+        $triples = $this->getTriples($subject, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure'), $this->sC->getURI('qb:attribute')));
 
-        $tDM = $this->getTriples($dm, $this->sC->getURI('qb:concept'));
-        $concepts = $this->getObjects($tDM);
+        foreach($triples as $po) {
+            foreach($po as $p => $o) {
+                foreach($o as $o_key) {
+                    $concept = $this->getValue($o_key['value'], 'qb:concept');
 
-        foreach($concepts as $concept) {
-            $label = $this->getValue($concept, 'rdfs:label');
+                    $label = $this->getValue($concept, 'rdfs:label');
 
-            //XXX: This is simple. Revisit when there is a issue
-            $id = strtolower(str_replace(' ', '-', $label));
+                    //XXX: This is simple. Revisit when there is a issue
+                    $id = strtolower(str_replace(' ', '-', $label));
 
-            $tR = $this->getTriples($dm, $this->sC->getURI('rdfs:range'));
-            $range = $this->getObjects($tR);
-            $range = isset($range[0]) ? $range[0] : '';
+                    $tR = $this->getTriples($p, $this->sC->getURI('rdfs:range'));
+                    $range = $this->getObjects($tR);
+                    $range = isset($range[0]) ? $range[0] : '';
 
-            switch($range) {
-                case $this->sC->getURI('xsd:int'):
-                    $type = 'integer';
-                    break;
-                default:
-                    $type = 'string';
-                    break;
+                    switch($range) {
+                        case $this->sC->getURI('xsd:int'):
+                            $type = 'integer';
+                            break;
+                        default:
+                            $type = 'string';
+                            break;
+                    }
+
+                    $this->dspl['concepts'][] = array(
+                        'id' => $id,
+                        'info' => array(
+                            'name' => $label,
+                            //XXX: Perhaps this can be different.
+                            'description' => $label,
+                            'url' => $concept
+                        ),
+                        'type' => $type,
+                        'topic' => '',
+                        'property' => array(
+                            'id' => '',
+                            'info' => array(
+                                'name' => '',
+                                'description', '',
+                                'url' => ''
+                            ),
+                            'concept' => ''
+                        ),
+                        'table' => $id.'_table'
+                    );
+
+                }
             }
-
-            $this->dspl['concepts'][] = array(
-                'id' => $id,
-                'info' => array(
-                    'name' => $label,
-                    //XXX: Perhaps this can be different.
-                    'description' => $label,
-                    'url' => $concept
-                ),
-                'type' => $type,
-                'topic' => '',
-                'property' => array(
-                    'id' => '',
-                    'info' => array(
-                        'name' => '',
-                        'description', '',
-                        'url' => ''
-                    ),
-                    'concept' => ''
-                ),
-                'table' => $id.'_table'
-            );
         }
     }
 

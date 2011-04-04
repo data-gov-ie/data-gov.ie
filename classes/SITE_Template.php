@@ -162,8 +162,7 @@ class SITE_Template extends LDP_Template
                             break;
                     }
 
-                    $this->dspl['concepts'][] = array(
-                        'id' => $id,
+                    $this->dspl['concepts'][$id] = array(
                         'info' => array(
                             'name' => $label,
                             //XXX: Perhaps this can be different.
@@ -183,7 +182,6 @@ class SITE_Template extends LDP_Template
                         ),
                         'table' => $id.'_table'
                     );
-
                 }
             }
         }
@@ -217,10 +215,10 @@ class SITE_Template extends LDP_Template
     {
         $dspl = $this->dspl;
 
-        foreach ($dspl['concepts'] as $concept) {
+        foreach ($dspl['concepts'] as $id => $concept) {
             $this->xw->startElement('concept');
 
-            $this->xw->writeAttribute('id', $concept['id']);
+            $this->xw->writeAttribute('id', $id);
 //        $this->xw->writeAttribute('extends', 'quantity:amount');
             $this->createInfo($concept);
             $this->createConceptType($concept);

@@ -4,7 +4,7 @@
  */
 class SITE_Template extends LDP_Template
 {
-    var $sC;
+    var $sC, $dspl;
 
     function __construct($template_filename, $desc, $urispace, $request, $sC)
     {
@@ -92,6 +92,8 @@ class SITE_Template extends LDP_Template
 
     function createDSPL()
     {
+        $this->createDSPLData();
+
         $qnames = array(
             'geo'      => 'http://www.google.com/publicdata/dataset/google/geo',
             'time'     => 'http://www.google.com/publicdata/dataset/google/time',
@@ -130,6 +132,61 @@ class SITE_Template extends LDP_Template
         return $this->xw->outputMemory();
     }
 
+
+    function createDSPLData()
+    {
+        $subject = $this->getCurrentDSD();
+
+        $triples = $this->getTriples($subject, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure')));
+        $dm = $this->getObjects($triples);
+
+        $tDM = $this->getTriples($dm, $this->sC->getURI('qb:concept'));
+        $concepts = $this->getObjects($tDM);
+
+        foreach($concepts as $concept) {
+            $label = $this->getValue($concept, 'rdfs:label');
+
+            //XXX: This is simple. Revisit when there is a issue
+            $id = strtolower(str_replace(' ', '-', $label));
+
+            $tR = $this->getTriples($dm, $this->sC->getURI('rdfs:range'));
+            $range = $this->getObjects($tR);
+            $range = isset($range[0]) ? $range[0] : '';
+
+            switch($range) {
+                case $this->sC->getURI('xsd:int'):
+                    $type = 'integer';
+                    break;
+                default:
+                    $type = 'string';
+                    break;
+            }
+
+            $this->dspl['concepts'][] = array(
+                'id' => $id,
+                'info' => array(
+                    'name' => $label,
+                    //XXX: Perhaps this can be different.
+                    'description' => $label,
+                    'url' => $concept
+                ),
+                'type' => $type,
+                'topic' => '',
+                'property' => array(
+                    'id' => '',
+                    'info' => array(
+                        'name' => '',
+                        'description', '',
+                        'url' => ''
+                    ),
+                    'concept' => ''
+                ),
+                'table' => $id.'_table'
+            );
+        }
+    }
+
+
     function createDSPLInfo()
     {
 
@@ -147,24 +204,17 @@ class SITE_Template extends LDP_Template
 
     function createDSPLConcepts()
     {
-        $subject = $this->getCurrentDSD();
-
         $this->xw->startElement('concepts');
-        $this->createConcepts($subject);
+        $this->createConcepts();
         $this->xw->endElement();
     }
 
 
-    function createConcepts($subject)
+    function createConcepts()
     {
-        $triples = $this->getTriples($subject, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure')));
-        $dm = $this->getObjects($triples);
+        $dspl = $this->dspl;
 
-        $concept = array();
-
-        foreach ($dm as $i) {
-            $concept = $this->buildConcept($i);
-
+        foreach ($dspl['concepts'] as $concept) {
             $this->xw->startElement('concept');
 
             $this->xw->writeAttribute('id', $concept['id']);
@@ -177,52 +227,6 @@ class SITE_Template extends LDP_Template
 
             $this->xw->endElement();
         }
-    }
-
-
-    function buildConcept($dm)
-    {
-        $tDM = $this->getTriples($dm, $this->sC->getURI('qb:concept'));
-        $concept = $this->getObjects($tDM);
-
-        $label = $this->getValue($concept[0], 'rdfs:label');
-        //XXX: This is simple. Revisit when there is a issue
-        $id = strtolower(str_replace(' ', '-', $label));
-
-        $tR = $this->getTriples($dm, $this->sC->getURI('rdfs:range'));
-        $range = $this->getObjects($tR);
-        $range = isset($range[0]) ? $range[0] : '';
-
-        switch($range) {
-            case $this->sC->getURI('xsd:int'):
-                $type = 'integer';
-                break;
-            default:
-                $type = 'string';
-                break;
-        }
-
-        return array(
-            'id' => $id,
-            'info' => array(
-                'name' => $label,
-                //XXX: Perhaps this can be different.
-                'description' => $label,
-                'url' => $concept[0]
-            ),
-            'type' => $type,
-            'topic' => '',
-            'property' => array(
-                'id' => '',
-                'info' => array(
-                    'name' => '',
-                    'description', '',
-                    'url' => ''
-                ),
-                'concept' => ''
-            ),
-            'table' => $id.'_table'
-        );
     }
 
 

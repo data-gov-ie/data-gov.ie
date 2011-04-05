@@ -221,9 +221,9 @@ class SITE_Template extends LDP_Template
                         'id' => $id,
                         'type' => $type
                     );
-                }
 
-                $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
+                    $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
+                }
             }
         }
 

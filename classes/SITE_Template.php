@@ -126,7 +126,7 @@ class SITE_Template extends LDP_Template
         $this->createDSPLTopics();
 
         $this->createDSPLConcepts();
-//        $s = createDSPLSlices($triples)
+        $this->createDSPLSlices();
 //        $t = createDSPLTables();
 
         $this->xw->endElement();
@@ -192,25 +192,25 @@ class SITE_Template extends LDP_Template
 
                     switch($p) {
                         case $dimensionPropertyURI:
-                            $this->dspl['slices'][$DSDPV.'_slice']['dimensions'][] = $id;
+                            $this->dspl['slices'][$DSDPV.'_slice']['dimension'][] = $id;
                             break;
 
                         case $measurePropertyURI:
-                            $this->dspl['slices'][$DSDPV.'_slice']['measures'][] = $id;
+                            $this->dspl['slices'][$DSDPV.'_slice']['measure'][] = $id;
                             break;
 
                         case $attributePropertyURI:
-                            $this->dspl['slices'][$DSDPV.'_slice']['attributes'][] = $id;
+                            $this->dspl['slices'][$DSDPV.'_slice']['attribute'][] = $id;
                             break;
 
                         default:
                             break;
                     }
-
-                    $this->dspl['slices'][$DSDPV.'_slice']['table'] = $DSDPV.'_slice_table';
                 }
             }
         }
+
+        $this->dspl['slices'][$DSDPV.'_slice']['table'][] = $DSDPV.'_slice_table';
     }
 
 
@@ -328,41 +328,45 @@ class SITE_Template extends LDP_Template
     }
 
 
-    function createDSPLSlices($triples)
+    function createDSPLSlices()
     {
-        $cR = $this->sC->currentRequest[4];
-
-        $tD = $this->getTriples($cR, $this->sC->getURI('qb:dimension'), null);
-        $dimensions = $this->getProperties($tD);
-
-        $tM = $this->getTriples($cR, $this->sC->getURI('qb:measure'), null);
-        $measures = $this->getProperties($tM);
-    }
-
-
-    function createSlice($id, $dimensions, $metrics, $table)
-    {
-        $this->xw->startElement('slice');
-        foreach($dimensions as $dimension) {
-            $this->createSliceDimension();
-        }
-        $this->createSliceMeasure();
+        $this->xw->startElement('slices');
+        $this->createSlices();
         $this->xw->endElement();
     }
 
 
-    function createSliceDimension()
+    function createSlices()
     {
+        $dspl = $this->dspl;
+
+        foreach ($dspl['slices'] as $id => $slices) {
+            $this->xw->startElement('slice');
+            foreach($slices as $componentProperty => $slice) {
+                foreach($slice as $value) {
+                    $this->createSlice($componentProperty, $value);
+                }
+            }
+            $this->xw->endElement();
+        }
     }
 
 
-    function createSliceMeasure()
+    function createSlice($componentProperty, $concept)
     {
-    }
+        switch($componentProperty) {
+            case 'table':
+                $this->xw->startElement('table');
+                $this->xw->writeAttribute('ref', $concept);
+                $this->xw->endElement();
+                break;
 
-
-    function createsliceTable()
-    {
+            default:
+                $this->xw->startElement($componentProperty);
+                $this->xw->writeAttribute('concept', $concept);
+                $this->xw->endElement();
+                break;
+        }
     }
 
 

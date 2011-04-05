@@ -127,7 +127,7 @@ class SITE_Template extends LDP_Template
 
         $this->createDSPLConcepts();
         $this->createDSPLSlices();
-//        $t = createDSPLTables();
+        $this->createDSPLTables();
 
         $this->xw->endElement();
         $this->xw->endDocument();
@@ -153,22 +153,30 @@ class SITE_Template extends LDP_Template
 
                     $label = $this->getValue($concept, 'rdfs:label');
 
-                    //XXX: This is simple. Revisit when there is a issue
+                    //XXX: This is simple.
                     $id = strtolower(str_replace(' ', '-', $label));
 
-                    $tR = $this->getTriples($p, $this->sC->getURI('rdfs:range'));
+                    $tR = $this->getTriples($o_key, $this->sC->getURI('rdfs:range'));
+
                     $range = $this->getObjects($tR);
                     $range = isset($range[0]) ? $range[0] : '';
 
+                    //XXX: Need to do more decisions here
                     switch($range) {
                         case $this->sC->getURI('xsd:int'):
                             $type = 'integer';
                             break;
                         default:
-                            $type = 'string';
+                            if ($o_key['value'] == $this->sC->getURI('sdmx-dimension:refPeriod')) {
+                                $type = 'date';
+                            }
+                            else {
+                                $type = 'string';
+                            }
                             break;
                     }
 
+                    // DSPL Concepts
                     $this->dspl['concepts'][$id] = array(
                         'info' => array(
                             'name' => $label,
@@ -190,6 +198,7 @@ class SITE_Template extends LDP_Template
                         'table' => $id.'_table'
                     );
 
+                    // DSPL Slices
                     switch($p) {
                         case $dimensionPropertyURI:
                             $this->dspl['slices'][$DSDPV.'_slice']['dimension'][] = $id;
@@ -206,10 +215,19 @@ class SITE_Template extends LDP_Template
                         default:
                             break;
                     }
+
+                    // DSPL Tables
+                    $this->dspl['tables'][$id.'_table']['column'] = array(
+                        'id' => $id,
+                        'type' => $type
+                    );
                 }
+
+                $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
             }
         }
 
+        // DSPL Slices
         $this->dspl['slices'][$DSDPV.'_slice']['table'][] = $DSDPV.'_slice_table';
     }
 
@@ -342,6 +360,7 @@ class SITE_Template extends LDP_Template
 
         foreach ($dspl['slices'] as $id => $slices) {
             $this->xw->startElement('slice');
+            $this->xw->writeAttribute('id', $id);
             foreach($slices as $componentProperty => $slice) {
                 foreach($slice as $value) {
                     $this->createSlice($componentProperty, $value);
@@ -372,7 +391,54 @@ class SITE_Template extends LDP_Template
 
     function createDSPLTables()
     {
+        $this->xw->startElement('tables');
+        $this->createTables();
+        $this->xw->endElement();
     }
+
+
+    function createTables()
+    {
+        $dspl = $this->dspl;
+
+        foreach ($dspl['tables'] as $id_table => $cd) {
+            $this->xw->startElement('table');
+            $this->xw->writeAttribute('id', $id_table);
+
+            foreach($cd as $key => $value) {
+                switch($key) {
+                    case 'column':
+                        $this->xw->startElement('column');
+                        $this->xw->writeAttribute('id', $value['id']);
+                        $this->xw->writeAttribute('type', $value['type']);
+                        switch ($value['type']) {
+                            case 'date':
+                                $this->xw->writeAttribute('format', 'yyyy');
+                            default:
+                                break;
+                        }
+                        $this->xw->endElement();
+                        break;
+
+                    case 'data':
+                        $this->xw->startElement('data');
+                        $this->xw->startElement('file');
+                        $this->xw->writeAttribute('format', 'csv');
+                        $this->xw->writeAttribute('encoding', 'utf-8');
+                        $this->xw->text($value);
+                        $this->xw->endElement();
+                        $this->xw->endElement();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            $this->xw->endElement();
+        }
+    }
+
 
 
     /*

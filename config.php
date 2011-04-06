@@ -141,6 +141,8 @@ $config['entity']['cso_province']['template'] = 'page.geo.html';
 
 $config['sparql_query']['dsd'] = "
 CONSTRUCT {
+    ?dataset qb:structure ?dsd .
+    ?dataset sdmx-metadata:title ?sdmxMetadataTitle .
     ?dsd a qb:DataStructureDefinition .
 
     ?dsd qb:dimension ?dimensionProperty .
@@ -157,6 +159,8 @@ CONSTRUCT {
 
 }
 WHERE {
+    ?dataset qb:structure ?dsd .
+    ?dataset sdmx-metadata:title ?sdmxMetadataTitle .
     ?dsd a qb:DataStructureDefinition .
     ?dsd qb:component ?component .
 

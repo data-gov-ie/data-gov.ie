@@ -20,8 +20,13 @@ $config['prefixes'] = array(
     'wgs'               => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
 
     'sdmx'              => 'http://purl.org/linked-data/sdmx#',
+    'sdmx-attribute'    => 'http://purl.org/linked-data/sdmx/2009/attribute#',
+    'sdmx-code'         => 'http://purl.org/linked-data/sdmx/2009/code#',
     'sdmx-concept'      => 'http://purl.org/linked-data/sdmx/2009/concept#',
     'sdmx-dimension'    => 'http://purl.org/linked-data/sdmx/2009/dimension#',
+    'sdmx-measure'      => 'http://purl.org/linked-data/sdmx/2009/measure#',
+    'sdmx-metadata'     => 'http://purl.org/linked-data/sdmx/2009/metadata#',
+    'sdmx-subject'      => 'http://purl.org/linked-data/sdmx/2009/subject#',
     'qb'                => 'http://purl.org/linked-data/cube#',
 
     'year'         => 'http://reference.data.gov.uk/id/year/',

@@ -241,7 +241,19 @@ class SITE_Template extends LDP_Template
 
     function createDSPLInfo()
     {
+        $DSDURI = $this->getCurrentDSD();
 
+        $dataset = $this->getSubjects($this->getTriples(null, $this->sC->getURI('qb:structure'), $DSDURI));
+
+        $infoDescription = $this->getValue($dataset[0], 'sdmx-metadata:title');
+
+        $this->createInfo(array(
+            'info' => array(
+                'name' => 'DataGovIE Statistics - '.$dataset[0],
+                'description' => $infoDescription,
+                'url' => 'http://'.$this->sC->config['site']['server'].'/'
+            )
+        ));
     }
 
     function createDSPLProvider()

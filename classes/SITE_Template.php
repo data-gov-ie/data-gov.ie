@@ -258,7 +258,21 @@ class SITE_Template extends LDP_Template
 
     function createDSPLProvider()
     {
+        $this->xw->startElement('provider');
 
+        $this->xw->startElement('name');
+        $this->xw->startElement('value');
+        $this->xw->text('Central Statistics office');
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->startElement('url');
+        $this->xw->startElement('value');
+        $this->xw->text('http://cso.ie/');
+        $this->xw->endElement();
+        $this->xw->endElement();
+
+        $this->xw->endElement();
     }
 
     function createDSPLTopics()

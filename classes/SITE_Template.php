@@ -146,17 +146,17 @@ class SITE_Template extends LDP_Template
 
         $triples = $this->getTriples($DSDURI, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure'), $this->sC->getURI('qb:attribute')));
 
-        foreach($triples as $s => $po) {
-            foreach($po as $p => $o) {
-                foreach($o as $o_key) {
-                    $concept = $this->getValue($o_key['value'], 'qb:concept');
+        foreach($triples as $s => $componentProperties) {
+            foreach($componentProperties as $componentProperty => $properties) {
+                foreach($properties as $property) {
+                    $concept = $this->getValue($property['value'], 'qb:concept');
 
                     $label = $this->getValue($concept, 'rdfs:label');
 
                     //XXX: This is simple.
                     $id = strtolower(str_replace(' ', '-', $label));
 
-                    $tR = $this->getTriples($o_key, $this->sC->getURI('rdfs:range'));
+                    $tR = $this->getTriples($properties, $this->sC->getURI('rdfs:range'));
 
                     $range = $this->getObjects($tR);
                     $range = isset($range[0]) ? $range[0] : '';
@@ -167,7 +167,7 @@ class SITE_Template extends LDP_Template
                             $type = 'integer';
                             break;
                         default:
-                            if ($o_key['value'] == $this->sC->getURI('sdmx-dimension:refPeriod')) {
+                            if ($property['value'] == $this->sC->getURI('sdmx-dimension:refPeriod')) {
                                 $type = 'date';
                             }
                             else {
@@ -199,7 +199,7 @@ class SITE_Template extends LDP_Template
                     );
 
                     // DSPL Slices
-                    switch($p) {
+                    switch($componentProperty) {
                         case $dimensionPropertyURI:
                             $this->dspl['slices'][$DSDPV.'_slice']['dimension'][] = $id;
                             break;
@@ -217,18 +217,25 @@ class SITE_Template extends LDP_Template
                     }
 
                     // DSPL Tables
-                    $this->dspl['tables'][$id.'_table']['column'] = array(
+                    $this->dspl['tables'][$id.'_table']['column'][] = array(
+                        'id' => $id,
+                        'type' => $type)
+                    ;
+                    $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
+
+                    $this->dspl['tables'][$DSDPV.'_slice_table']['column'][] = array(
                         'id' => $id,
                         'type' => $type
                     );
-
-                    $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
                 }
             }
         }
 
         // DSPL Slices
         $this->dspl['slices'][$DSDPV.'_slice']['table'][] = $DSDPV.'_slice_table';
+
+        // DSPL Tables
+        $this->dspl['tables'][$DSDPV.'_slice_table']['data'] = $id.'.csv';
     }
 
 
@@ -401,23 +408,26 @@ class SITE_Template extends LDP_Template
     {
         $dspl = $this->dspl;
 
-        foreach ($dspl['tables'] as $id_table => $cd) {
+        foreach ($dspl['tables'] as $id_table => $tables) {
             $this->xw->startElement('table');
             $this->xw->writeAttribute('id', $id_table);
 
-            foreach($cd as $key => $value) {
-                switch($key) {
+            foreach($tables as $tableKey => $tableValue) {
+                switch($tableKey) {
                     case 'column':
-                        $this->xw->startElement('column');
-                        $this->xw->writeAttribute('id', $value['id']);
-                        $this->xw->writeAttribute('type', $value['type']);
-                        switch ($value['type']) {
-                            case 'date':
-                                $this->xw->writeAttribute('format', 'yyyy');
-                            default:
-                                break;
+                        foreach($tableValue as $column) {
+                            $this->xw->startElement('column');
+                            $this->xw->writeAttribute('id', $column['id']);
+                            $this->xw->writeAttribute('type', $column['type']);
+                            switch ($column['type']) {
+                                case 'date':
+                                    $this->xw->writeAttribute('format', 'yyyy');
+                                default:
+                                    break;
+                            }
+                            $this->xw->endElement();
                         }
-                        $this->xw->endElement();
+
                         break;
 
                     case 'data':
@@ -425,7 +435,7 @@ class SITE_Template extends LDP_Template
                         $this->xw->startElement('file');
                         $this->xw->writeAttribute('format', 'csv');
                         $this->xw->writeAttribute('encoding', 'utf-8');
-                        $this->xw->text($value);
+                        $this->xw->text($tableValue);
                         $this->xw->endElement();
                         $this->xw->endElement();
                         break;

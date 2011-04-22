@@ -5,7 +5,7 @@
 class SITE_Template extends LDP_Template
 {
     var $sC, $dspl, $currentDSDPrefixValue;
-    var $filterConcepts = array();
+    var $filterConcepts, $filterTopics, $useTopics = array();
 
     function __construct($template_filename, $desc, $urispace, $request, $sC)
     {
@@ -97,6 +97,7 @@ class SITE_Template extends LDP_Template
     {
         $this->filterConcepts = array('reference-period');
         $this->filterTables = array('reference-period', 'statistical-population');
+        $this->useTopics = array('statistical-population');
 
         $this->createDSPLData();
 
@@ -177,6 +178,14 @@ class SITE_Template extends LDP_Template
                                 $type = 'string';
                             }
                             break;
+                    }
+
+                    if (in_array($id, $this->useTopics)) {
+                        $this->dspl['topics'][$id] = array(
+                            'info' => array(
+                                'name' => $label
+                            )
+                        );
                     }
 
                     if (!in_array($id, $this->filterConcepts)) {
@@ -283,16 +292,16 @@ class SITE_Template extends LDP_Template
 
     function createDSPLTopics()
     {
-        $dspl = $this->dspl;
-
         $this->xw->startElement('topics');
-        foreach($dspl['topics'] as $id) {
-            $this->xw->startElment('topic');
+        foreach($this->dspl['topics'] as $id => $topic) {
+            $this->xw->startElement('topic');
             $this->xw->writeAttribute('id', $id);
+            $this->xw->startElement('info');
             $this->xw->startElement('name');
             $this->xw->startElement('value');
             $this->xw->writeAttribute('xml:lang', 'en');
-            $this->xw->text($id['name']);
+            $this->xw->text($topic['info']['name']);
+            $this->xw->endElement();
             $this->xw->endElement();
             $this->xw->endElement();
             $this->xw->endElement();

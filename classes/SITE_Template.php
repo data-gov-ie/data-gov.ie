@@ -5,6 +5,7 @@
 class SITE_Template extends LDP_Template
 {
     var $sC, $dspl, $currentDSDPrefixValue;
+    var $filterConcepts = array();
 
     function __construct($template_filename, $desc, $urispace, $request, $sC)
     {
@@ -94,6 +95,9 @@ class SITE_Template extends LDP_Template
 
     function createDSPL()
     {
+        $this->filterConcepts = array('reference-period');
+        $this->filterTables = array('reference-period', 'statistical-population');
+
         $this->createDSPLData();
 
         $qnames = array(
@@ -143,7 +147,6 @@ class SITE_Template extends LDP_Template
 
         $DSDURI = $this->getCurrentDSD();
         $DSDPV = $this->currentDSDPrefixValue;
-
         $triples = $this->getTriples($DSDURI, array($this->sC->getURI('qb:dimension'), $this->sC->getURI('qb:measure'), $this->sC->getURI('qb:attribute')));
 
         foreach($triples as $s => $componentProperties) {
@@ -176,27 +179,29 @@ class SITE_Template extends LDP_Template
                             break;
                     }
 
-                    // DSPL Concepts
-                    $this->dspl['concepts'][$id] = array(
-                        'info' => array(
-                            'name' => $label,
-                            //XXX: Perhaps this can be different.
-                            'description' => $label,
-                            'url' => $concept
-                        ),
-                        'type' => $type,
-                        'topic' => '',
-                        'property' => array(
-                            'id' => '',
+                    if (!in_array($id, $this->filterConcepts)) {
+                        // DSPL Concepts
+                        $this->dspl['concepts'][$id] = array(
                             'info' => array(
-                                'name' => '',
-                                'description', '',
-                                'url' => ''
+                                'name' => $label,
+                                //XXX: Perhaps this can be different.
+                                'description' => $label,
+                                'url' => $concept
                             ),
-                            'concept' => ''
-                        ),
-                        'table' => $id.'_table'
-                    );
+                            'type' => $type,
+                            'topic' => '',
+                            'property' => array(
+                                'id' => '',
+                                'info' => array(
+                                    'name' => '',
+                                    'description', '',
+                                    'url' => ''
+                                ),
+                                'concept' => ''
+                            ),
+                            'table' => $id.'_table'
+                        );
+                    }
 
                     // DSPL Slices
                     switch($componentProperty) {
@@ -216,13 +221,14 @@ class SITE_Template extends LDP_Template
                             break;
                     }
 
-                    // DSPL Tables
-                    $this->dspl['tables'][$id.'_table']['column'][] = array(
-                        'id' => $id,
-                        'type' => $type)
-                    ;
-                    $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
-
+                    if (!in_array($id, $this->filterTables)) {
+                        // DSPL Tables
+                        $this->dspl['tables'][$id.'_table']['column'][] = array(
+                            'id' => $id,
+                            'type' => $type)
+                        ;
+                        $this->dspl['tables'][$id.'_table']['data'] = $id.'.csv';
+                    }
                     $this->dspl['tables'][$DSDPV.'_slice_table']['column'][] = array(
                         'id' => $id,
                         'type' => $type
@@ -231,9 +237,9 @@ class SITE_Template extends LDP_Template
             }
         }
 
+
         // DSPL Slices
         $this->dspl['slices'][$DSDPV.'_slice']['table'][] = $DSDPV.'_slice_table';
-
         // DSPL Tables
         $this->dspl['tables'][$DSDPV.'_slice_table']['data'] = $id.'.csv';
     }

@@ -283,6 +283,8 @@ class SITE_Template extends LDP_Template
 
     function createDSPLTopics()
     {
+        $dspl = $this->dspl;
+
         $this->xw->startElement('topics');
         foreach($dspl['topics'] as $id) {
             $this->xw->startElment('topic');

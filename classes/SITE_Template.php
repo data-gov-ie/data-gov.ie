@@ -283,7 +283,19 @@ class SITE_Template extends LDP_Template
 
     function createDSPLTopics()
     {
-
+        $this->xw->startElement('topics');
+        foreach($dspl['topics'] as $id) {
+            $this->xw->startElment('topic');
+            $this->xw->writeAttribute('id', $id);
+            $this->xw->startElement('name');
+            $this->xw->startElement('value');
+            $this->xw->writeAttribute('xml:lang', 'en');
+            $this->xw->text($id['name']);
+            $this->xw->endElement();
+            $this->xw->endElement();
+            $this->xw->endElement();
+        }
+        $this->xw->endElement();
     }
 
     function createDSPLConcepts()

@@ -33,10 +33,13 @@
     void:vocabulary <http://purl.org/linked-data/cube> ,
                     <http://purl.org/linked-data/sdmx> ,
                     <http://purl.org/linked-data/sdmx/2009/code> ,
+                    <http://purl.org/linked-data/sdmx/2009/concept> ,
                     <http://purl.org/linked-data/sdmx/2009/dimension> ,
-                    <http://purl.org/linked-data/sdmx/2009/metadata> ,
+                    <http://purl.org/linked-data/sdmx/2009/subject> ,
+                    <http://purl.org/linked-data/sdmx/2009/measure> ,
+
                     <http://reference.data.gov.uk/id/year/> ,
-                    <http://stats.govdata.ie/codelist/age1/> ,
+                    <http://stats.data-gov.ie/codelist/age2/> ,
                     <http://www.w3.org/2004/02/skos/core> ;
 
     void:subject <http://dbpedia.org/resource/Census> ,
@@ -50,9 +53,13 @@
     void:feature <http://www.w3.org/ns/formats/RDF_XML> ,
                  <http://www.w3.org/ns/formats/Turtle> ;
 
+    void:rootResource <http://stats.data-gov.ie/dsd> ;
+
     void:exampleResource <http://geo.data-gov.ie/Province> ,
                          <http://geo.data-gov.ie/city/galway> ,
                          <http://stats.data-gov.ie/codelist/birthplace> .
+
+    void:triples 12303512 ;
 
 
 :CSO_DBpedia a void:Linkset ;

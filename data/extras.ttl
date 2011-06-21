@@ -1,23 +1,29 @@
 # Extra statements to store locally
 
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://geo.govdata.ie/city/cork>
-    wgs:lat 51.8987643 ;
-    wgs:long -8.4712125 .
+    a wgs:Point ;
+    wgs:lat "51.8987643"^^xsd:double ;
+    wgs:long "-8.4712125"^^xsd:double .
 
 <http://geo.govdata.ie/city/dublin>
-    wgs:lat 53.3492787 ;
-    wgs:long -6.2611661 .
+    a wgs:Point ;
+    wgs:lat "53.3492787"^^xsd:double ;
+    wgs:long "-6.2611661"^^xsd:double .
 
 <http://geo.govdata.ie/city/galway>
-    wgs:lat 53.2744122 ;
-    wgs:long -9.0490632 .
+    a wgs:Point ;
+    wgs:lat "53.2744122"^^xsd:double ;
+    wgs:long "-9.0490632"^^xsd:double .
 
 <http://geo.govdata.ie/city/limerick>
-    wgs:lat 52.6612577 ;
-    wgs:long -8.6302084 .
+    a wgs:Point ;
+    wgs:lat "52.6612577"^^xsd:double ;
+    wgs:long "-8.6302084"^^xsd:double .
 
 <http://geo.govdata.ie/city/waterford>
-    wgs:lat 52.2591035 ;
-    wgs:long -7.1137442 .
+    a wgs:Point ;
+    wgs:lat "52.2591035"^^xsd:double ;
+    wgs:long "-7.1137442"^^xsd:double .

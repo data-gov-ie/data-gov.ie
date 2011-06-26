@@ -1,5 +1,7 @@
 <?php
-
+global $argc;
+global $argv;
+$config['argv'] = ($argc > 0) ? $argv : null;
 $config['site']['name']   = 'Data Gov.ie';          /*Name of your site. Appears in page title, address etc. */
 $config['site']['server'] = 'govdata.ie';           /* 'site' in http://site */
 $config['site']['path']   = '';                     /* '/foo' in http://site/foo */
@@ -15,9 +17,13 @@ $config['server']['stats.govdata.ie'] = 'stats.govdata.ie';
 $config['prefixes'] = array(
     'rdf'               => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
     'rdfs'              => 'http://www.w3.org/2000/01/rdf-schema#',
+    'owl'               => 'http://www.w3.org/2002/07/owl#',
     'xsd'               => 'http://www.w3.org/2001/XMLSchema#',
+    'dcterms'           => 'http://purl.org/dc/terms/',
+    'foaf'              => 'http://xmlns.com/foaf/0.1/',
     'skos'              => 'http://www.w3.org/2004/02/skos/core#',
     'wgs'               => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+    'dcat'              => 'http://www.w3.org/ns/dcat#',
 
     'sdmx'              => 'http://purl.org/linked-data/sdmx#',
     'sdmx-attribute'    => 'http://purl.org/linked-data/sdmx/2009/attribute#',
@@ -36,7 +42,12 @@ $config['prefixes'] = array(
     'codelist'     => 'http://stats.govdata.ie/codelist/',
     'dsd'          => 'http://stats.govdata.ie/dsd/',
     'property'     => 'http://stats.govdata.ie/property/',
-    'geoDataGov'   => 'http://geo.govdata.ie/'
+    'geoDataGov'   => 'http://geo.govdata.ie/',
+    'DataGov'      => 'http://govdata.ie/',
+
+    'sch-ont' => 'http://education.data.gov.uk/ontology/school#',
+
+    'afn' => 'http://jena.hpl.hp.com/ARQ/function#'
 );
 
 /**
@@ -134,6 +145,8 @@ WHERE {
     }
 }
 ";
+
+
 $config['entity']['cso_geoArea']['path']     = '/city';
 $config['entity']['cso_geoArea']['query']    = 'cso_geoArea';
 $config['entity']['cso_geoArea']['template'] = 'page.geo.html';
@@ -142,6 +155,30 @@ $config['entity']['cso_geoArea']['template'] = 'page.geo.html';
 $config['entity']['cso_province']['path']     = '/province';
 $config['entity']['cso_province']['query']    = 'cso_geoArea';
 $config['entity']['cso_province']['template'] = 'page.geo.html';
+
+
+$config['entity']['doe_school']['path']     = '/school';
+$config['entity']['doe_school']['query']    = 'doe_school';
+$config['entity']['doe_school']['template'] = 'page.school.html';
+$config['sparql_query']['doe_school'] = "
+CONSTRUCT {
+    <URI>
+        ?p ?o ;
+        sch-ont:address
+            ?address1, ?address2, ?address3 .
+}
+
+WHERE {
+    <URI>
+        a sch-ont:School ;
+        ?p ?o .
+
+    OPTIONAL { <URI> sch-ont:address [ sch-ont:address1 ?address1 ] . }
+    OPTIONAL { <URI> sch-ont:address [ sch-ont:address2 ?address2 ] . }
+    OPTIONAL { <URI> sch-ont:address [ sch-ont:address3 ?address3 ] . }
+}
+";
+
 
 
 $config['sparql_query']['dsd'] = "

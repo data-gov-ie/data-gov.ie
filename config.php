@@ -2,14 +2,14 @@
 global $argc;
 global $argv;
 $config['argv'] = ($argc > 0) ? $argv : null;
-$config['site']['name']   = 'Data Gov.ie';          /*Name of your site. Appears in page title, address etc. */
-$config['site']['server'] = 'govdata.ie';           /* 'site' in http://site */
+$config['site']['name']   = 'Data Gov IE';          /*Name of your site. Appears in page title, address etc. */
+$config['site']['server'] = 'data-gov.ie';           /* 'site' in http://site */
 $config['site']['path']   = '';                     /* '/foo' in http://site/foo */
 $config['site']['theme']  = 'cso';                  /* 'default' in /var/www/site/theme/cso */
 $config['site']['logo']   = 'logo_data-gov.ie.png'; /* 'logo.png' in /var/www/site/theme/default/images/logo.png */
 
-$config['server']['geo.govdata.ie']   = 'geo.govdata.ie';
-$config['server']['stats.govdata.ie'] = 'stats.govdata.ie';
+$config['server']['geo.data-gov.ie']   = 'geo.data-gov.ie';
+$config['server']['stats.data-gov.ie'] = 'stats.data-gov.ie';
 
 /*
  * Common prefixes for this dataset
@@ -37,13 +37,13 @@ $config['prefixes'] = array(
 
     'year'         => 'http://reference.data.gov.uk/id/year/',
 
-    'statsDataGov' => 'http://stats.govdata.ie/',
-    'concept'      => 'http://stats.govdata.ie/concept/',
-    'codelist'     => 'http://stats.govdata.ie/codelist/',
-    'dsd'          => 'http://stats.govdata.ie/dsd/',
-    'property'     => 'http://stats.govdata.ie/property/',
-    'geoDataGov'   => 'http://geo.govdata.ie/',
-    'DataGov'      => 'http://govdata.ie/',
+    'statsDataGov' => 'http://stats.data-gov.ie/',
+    'concept'      => 'http://stats.data-gov.ie/concept/',
+    'codelist'     => 'http://stats.data-gov.ie/codelist/',
+    'dsd'          => 'http://stats.data-gov.ie/dsd/',
+    'property'     => 'http://stats.data-gov.ie/property/',
+    'geoDataGov'   => 'http://geo.data-gov.ie/',
+    'DataGov'      => 'http://data-gov.ie/',
 
     'sch-ont' => 'http://education.data.gov.uk/ontology/school#',
 

@@ -1,4 +1,4 @@
-The dataset for DataGov IE is generated from http://github.com/csarven/ie-linked-data
+The dataset for DataGov IE is generated from http://github.com/cygri/ie-linked-data
 
 This directory contains extras.ttl file with additional triples.
 The intention is to keep a cached copy, instead of dereferencing every time.

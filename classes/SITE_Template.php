@@ -519,13 +519,13 @@ class SITE_Template extends LDP_Template
         $ns = array();
 
         //XXX: Would it be better to use the values from index or the config's ns?
-        $ns_property                      = 'http://'.$c['server']['stats.govdata.ie'].'/property/';
+        $ns_property                      = 'http://'.$c['server']['stats.data-gov.ie'].'/property/';
         $ns['property']['geoArea']        = $ns_property.'geoArea';
         $ns['property']['maritalStatus']  = $ns_property.'maritalStatus';
         $ns['property']['age2']           = $ns_property.'age2';
         $ns['property']['population']     = $ns_property.'population';
 
-        $ns_codeList = 'http://'.$c['server']['stats.govdata.ie'].'/codelist/';
+        $ns_codeList = 'http://'.$c['server']['stats.data-gov.ie'].'/codelist/';
         $ns['prefixes']['codelist']['marital-status'] = $ns_codeList.'marital-status';
         $ns['prefixes']['codelist']['age2'] = $ns_codeList.'age2';
 
@@ -617,11 +617,11 @@ class SITE_Template extends LDP_Template
         $c  = $sC->getConfig();
 
         //XXX: Would it be better to use the values from index?
-        $ns_property                      = 'http://'.$c['server']['stats.govdata.ie'].'/property/';
+        $ns_property                      = 'http://'.$c['server']['stats.data-gov.ie'].'/property/';
         $ns['property']['geoArea']        = $ns_property.'geoArea';
         $ns['property']['birthplace']     = $ns_property.'birthplace';
 
-        $ns_codeList = 'http://'.$c['server']['stats.govdata.ie'].'/codelist/';
+        $ns_codeList = 'http://'.$c['server']['stats.data-gov.ie'].'/codelist/';
         $ns['prefixes']['codelist']['birthplace'] = $ns_codeList.'birthplace';
 
         $resource_uri = $this->desc->get_primary_resource_uri();
@@ -664,12 +664,12 @@ class SITE_Template extends LDP_Template
         $c  = $sC->getConfig();
 
         //XXX: Would it be better to use the values from index?
-        $ns_property                      = 'http://'.$c['server']['stats.govdata.ie'].'/property/';
+        $ns_property                      = 'http://'.$c['server']['stats.data-gov.ie'].'/property/';
         $ns['property']['geoArea']        = $ns_property.'geoArea';
         $ns['property']['religion']       = $ns_property.'religion';
         $ns['property']['population']     = $ns_property.'population';
 
-        $ns_codeList = 'http://'.$c['server']['stats.govdata.ie'].'/codelist/';
+        $ns_codeList = 'http://'.$c['server']['stats.data-gov.ie'].'/codelist/';
         $ns['prefixes']['codelist']['religion']   = $ns_codeList.'religion';
         $ns['prefixes']['codelist']['population'] = $ns_codeList.'population';
 
@@ -718,12 +718,12 @@ class SITE_Template extends LDP_Template
         $c  = $sC->getConfig();
 
         //XXX: Would it be better to use the values from index?
-        $ns_property                      = 'http://'.$c['server']['stats.govdata.ie'].'/property/';
+        $ns_property                      = 'http://'.$c['server']['stats.data-gov.ie'].'/property/';
         $ns['property']['geoArea']        = $ns_property.'geoArea';
         $ns['property']['usualResidence'] = $ns_property.'usualResidence';
         $ns['property']['population']     = $ns_property.'population';
 
-        $ns_codeList = 'http://'.$c['server']['stats.govdata.ie'].'/codelist/';
+        $ns_codeList = 'http://'.$c['server']['stats.data-gov.ie'].'/codelist/';
         $ns['prefixes']['codelist']['usual-residence']   = $ns_codeList.'usual-residence';
         $ns['prefixes']['codelist']['population'] = $ns_codeList.'population';
 

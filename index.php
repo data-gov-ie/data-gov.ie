@@ -12,13 +12,13 @@
  * @link      http://deri.org/
  */
 
-define('SITE_DIR', '/var/www/govdata.ie/');
+define('SITE_DIR', '/var/www/data-gov.ie/');
 define('LDP_DIR', '/var/www/lib/linked-data-pages/');
 define('PAGET_DIR', '/var/www/lib/paget/');
 define('MORIARTY_DIR', '/var/www/lib/moriarty/');
 define('MORIARTY_ARC_DIR', '/var/www/lib/arc2/');
 
-define('STORE_URI', 'http://localhost:3030/cso/query');
+define('STORE_URI', 'http://localhost:3030/datagovie/query');
 
 require_once LDP_DIR . 'classes/LDP_Config.php';
 require_once LDP_DIR . 'classes/LDP.php';

@@ -157,7 +157,7 @@ $config['entity']['cso_province']['query']    = 'cso_geoArea';
 $config['entity']['cso_province']['template'] = 'page.geo.html';
 
 
-$config['entity']['doe_school']['path']     = '/school';
+$config['entity']['doe_school']['path']     = '/school/';
 $config['entity']['doe_school']['query']    = 'doe_school';
 $config['entity']['doe_school']['template'] = 'page.school.html';
 $config['sparql_query']['doe_school'] = "
@@ -165,7 +165,7 @@ CONSTRUCT {
     <URI>
         ?p ?o ;
         sch-ont:address
-            ?address1, ?address2, ?address3 .
+            ?address1, ?address2, ?address3, ?regionLabel .
 }
 
 WHERE {
@@ -176,6 +176,7 @@ WHERE {
     OPTIONAL { <URI> sch-ont:address [ sch-ont:address1 ?address1 ] . }
     OPTIONAL { <URI> sch-ont:address [ sch-ont:address2 ?address2 ] . }
     OPTIONAL { <URI> sch-ont:address [ sch-ont:address3 ?address3 ] . }
+    OPTIONAL { <URI> sch-ont:address [ sch-ont:region [ skos:prefLabel ?regionLabel ] . }
 }
 ";
 

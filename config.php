@@ -176,7 +176,7 @@ WHERE {
     OPTIONAL { <URI> sch-ont:address [ sch-ont:address1 ?address1 ] . }
     OPTIONAL { <URI> sch-ont:address [ sch-ont:address2 ?address2 ] . }
     OPTIONAL { <URI> sch-ont:address [ sch-ont:address3 ?address3 ] . }
-    OPTIONAL { <URI> sch-ont:address [ sch-ont:region [ skos:prefLabel ?regionLabel ] . }
+    OPTIONAL { <URI> sch-ont:address [ sch-ont:region [ skos:prefLabel ?regionLabel ] ] . }
 }
 ";
 

@@ -18,7 +18,7 @@ define('PAGET_DIR', '/var/www/lib/paget/');
 define('MORIARTY_DIR', '/var/www/lib/moriarty/');
 define('MORIARTY_ARC_DIR', '/var/www/lib/arc2/');
 
-define('STORE_URI', 'http://localhost:3030/datagovie/query');
+define('STORE_URI', 'http://localhost:3030/dataset/query');
 
 require_once LDP_DIR . 'classes/LDP_Config.php';
 require_once LDP_DIR . 'classes/LDP.php';

@@ -76,26 +76,27 @@
 
 
 <#service> a sd:Service;
-    sd:url <http://data-gov.ie/sparql>;
+    sd:endpoint <http://data-gov.ie/sparql>;
+    sd:supportedLanguage sd:SPARQL11Query ;
     sd:feature sd:UnionDefaultGraph ;
     sd:defaultDatasetDescription [
         a sd:Dataset;
         dcterms:title "DataGoVIE";
         dcterms:description "Irish government data";
-        void:triples 12350207;
+        void:triples 12350208;
 
         sd:defaultGraph [
             a sd:Graph, void:Dataset;
             dcterms:title "DataGovIE SPARQL Endpoint Description";
             dcterms:description "Contains a copy of this SD+VoID file!";
-            void:triples 12350207;
+            void:triples 12350208;
         ];
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/void>;
             sd:graph [
                 a sd:Graph, void:Dataset;
                 dcterms:title "SD+VoID triples";
-                void:triples 215;
+                void:triples 216;
             ];
         ];
         sd:namedGraph [

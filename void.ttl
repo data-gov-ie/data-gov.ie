@@ -75,7 +75,7 @@
     foaf:homepage <http://dbpedia.org/> .
 
 
-<#service> a sd:Service;
+:service a sd:Service;
     sd:endpoint <http://data-gov.ie/sparql>;
     sd:supportedLanguage sd:SPARQL11Query ;
     sd:feature sd:UnionDefaultGraph ;

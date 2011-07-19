@@ -57,9 +57,9 @@
 
     void:exampleResource <http://geo.data-gov.ie/Province> ,
                          <http://geo.data-gov.ie/city/galway> ,
-                         <http://stats.data-gov.ie/codelist/birthplace> .
+                         <http://stats.data-gov.ie/codelist/birthplace> ;
 
-    void:triples 12303512 ;
+    void:triples 12303512 .
 
 
 :CSO_DBpedia a void:Linkset ;
@@ -73,3 +73,193 @@
 
 :DBpedia rdf:type void:Dataset ;
     foaf:homepage <http://dbpedia.org/> .
+
+
+<#service> a sd:Service;
+    sd:url <http://data-gov.ie/sparql>;
+    sd:defaultDatasetDescription [
+        a sd:Dataset;
+        dcterms:title "DataGoVIE";
+        dcterms:description "Irish government data";
+        void:triples 12350206;
+
+        sd:defaultGraph [
+            a sd:Graph, void:Dataset;
+            dcterms:title "DataGovIE SPARQL Endpoint Description";
+            dcterms:description "Contains a copy of this SD+VoID file!";
+            void:triples 12350206;
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/void>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SD+VoID triples";
+                void:triples 214;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/ie-linked-data>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Descriptions that are used in the :CSO dataset to tie everything together.";
+                void:triples 42449;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/cube>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "RDF Data Cube vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                foaf:homepage <http://publishing-statistical-data.googlecode.com/svn/trunk/specs/src/main/html/cube.html>;
+                void:triples 233;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 90;
+                void:dataDump <http://purl.org/linked-data/sdmx>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-attribute>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Attribute vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 759;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/attribute>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-code>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Code vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 655;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/code>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-concept>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Concept vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 1021;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/concept>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-dimension>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Dimension vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 69;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/dimension>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-measure>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Measure vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 48;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/measure>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-metadata>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Metadata vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 846;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/metadata>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/sdmx-subject>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "SDMX-RDF Subject vocabulary";
+                dcterms:description "Purpose of this is to have a local cached copy";
+                void:triples 295;
+                void:dataDump <http://purl.org/linked-data/sdmx/2009/subject>;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/extras>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Extra triples";
+                dcterms:description "These triples don't have a proper home yet. Consider it temporary";
+                void:triples 15;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-birthplace>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Persons usually resident and present in the State on Census Night, classified by place of birth";
+                void:triples 209778;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-ethnic-background>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Usually resident population by ethnic or cultural background";
+                void:triples 239746;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-gender-age-and-marital-status>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Persons by sex, age and marital status";
+                void:triples 9111500;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-gender-and-age>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Persons aged 18 and under by sex and single year of age and persons aged 19 and over by sex";
+                void:triples 2203025;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-nationality>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Persons usually resident and present in the State on Census Night, classified by nationality";
+                void:triples 239747;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-religion>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Number of persons by religion";
+                void:triples 149873;
+            ];
+        ];
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/persons-by-usual-residence>;
+            sd:graph [
+                a sd:Graph, void:Dataset;
+                dcterms:title "Usually resident population aged one year and over by usual residence one year before Census Day";
+                void:triples 149843;
+            ];
+        ];
+    ];
+    .
+

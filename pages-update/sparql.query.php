@@ -8,7 +8,7 @@ header ('Content-type:text/html; charset=utf-8');
   </head>
   <body>
     <h1>Fuseki Query</h1>
-    Dataset: cso
+    Dataset: dataset
     <hr/>
 
     <p><b>SPARQL Query</b></p>
@@ -33,12 +33,12 @@ PREFIX sdmx-metadata: <http://purl.org/linked-data/sdmx/2009/metadata#>
 PREFIX sdmx-subject: <http://purl.org/linked-data/sdmx/2009/subject#>
 PREFIX qb: <http://purl.org/linked-data/cube#>
 PREFIX year: <http://reference.data.gov.uk/id/year/>
-PREFIX statsDataGov: <http://stats.govdata.ie/>
-PREFIX concept: <http://stats.govdata.ie/concept/>
-PREFIX codelist: <http://stats.govdata.ie/codelist/>
-PREFIX dsd: <http://stats.govdata.ie/dsd/>
-PREFIX property: <http://stats.govdata.ie/property/>
-PREFIX geoDataGov: <http://geo.govdata.ie/>
+PREFIX statsDataGov: <http://stats.data-gov.ie/>
+PREFIX concept: <http://stats.data-gov.ie/concept/>
+PREFIX codelist: <http://stats.data-gov.ie/codelist/>
+PREFIX dsd: <http://stats.data-gov.ie/dsd/>
+PREFIX property: <http://stats.data-gov.ie/property/>
+PREFIX geoDataGov: <http://geo.data-gov.ie/>
 PREFIX sch-ont: <http://education.data.gov.uk/ontology/school#>
 
 </textarea>

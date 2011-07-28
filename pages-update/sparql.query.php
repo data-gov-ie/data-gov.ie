@@ -40,6 +40,7 @@ PREFIX dsd: <http://stats.data-gov.ie/dsd/>
 PREFIX property: <http://stats.data-gov.ie/property/>
 PREFIX geoDataGov: <http://geo.data-gov.ie/>
 PREFIX sch-ont: <http://education.data.gov.uk/ontology/school#>
+PREFIX void: <http://rdfs.org/ns/void#>
 
 </textarea>
         <br/>

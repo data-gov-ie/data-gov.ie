@@ -48,6 +48,8 @@ $config['prefixes'] = array(
     'sch-ont' => 'http://education.data.gov.uk/ontology/school#',
 
     'afn' => 'http://jena.hpl.hp.com/ARQ/function#'
+
+    'void' => 'http://rdfs.org/ns/void#'
 );
 
 /**

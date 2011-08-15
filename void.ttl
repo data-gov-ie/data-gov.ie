@@ -7,11 +7,11 @@
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix wv: <http://vocab.org/waiver/terms/norms> .
 @prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-@prefix : <#> .
+@prefix : <http://data-gov.ie/void.ttl#> .
 
 
-<> a void:DatasetDescription ;
-    dcterms:title "A voiD Description of the DataGov.IE Dataset" ;
+<http://data-gov.ie/void.ttl> a void:DatasetDescription ;
+    dcterms:title "A VoiD Description of the DataGov.IE Dataset" ;
     dcterms:creator <http://csarven.ca/#i> ;
     foaf:primaryTopic :DataGovIE .
 
@@ -37,13 +37,13 @@
 :VoID
     a sd:Graph, void:Dataset ;
     dcterms:title "SD+VoID triples" ;
-    void:triples 228 .
-
+    void:triples 230 ;
+    void:dataDump <http://data-gov.ie/void.ttl> .
 
 :CSO
-    rdf:type void:Dataset ;
+    a sd:Graph, void:Dataset ;
     dcterms:title "Irish Census Data" ;
-    dcterms:description "Irish Census Data from Central Statistics Office (2006)" ;
+    dcterms:description "Irish Census Data from Central Statistics Office" ;
     dcterms:source [ foaf:homepage <http://cso.ie/> ] ;
     dcterms:publisher [ foaf:homepage <http://deri.ie/> ] ;
     dcterms:created "2011-01-01"^^xsd:date ;
@@ -66,7 +66,7 @@
                  <http://dbpedia.org/resource/Statistical_survey> ;
 
     void:sparqlEndpoint <http://data-gov.ie/sparql> ;
-    void:dataDump <http://data-gov.ie/datadump/CSO-datasets.tar.zip> ;
+    void:dataDump <http://data-gov.ie/data/cso-dataset.tar.gz> ;
 
     void:feature <http://www.w3.org/ns/formats/RDF_XML> ,
                  <http://www.w3.org/ns/formats/Turtle> ;
@@ -77,7 +77,7 @@
                          <http://geo.data-gov.ie/city/galway> ,
                          <http://stats.data-gov.ie/codelist/birthplace> ;
 
-    void:triples 12303512 .
+    void:triples 12303513 .
 
 
 :CSO_DBpedia
@@ -98,7 +98,8 @@
 :IELinkedData
     a sd:Graph, void:Dataset ;
     dcterms:title "Descriptions that are used in the :CSO dataset to tie everything together." ;
-    void:triples 42449 .
+    void:triples 42449 ;
+    void:dataDump <http://data-gov.ie/data/ie-linked-data.tar.gz> .
 
 :RDFDataCube
     a sd:Graph, void:Dataset ;
@@ -173,56 +174,60 @@
         a sd:Dataset;
         dcterms:title "DataGoVIE" ;
         dcterms:description "Irish government data" ;
-        void:triples 12350220 ;
+        void:triples 12350225 ;
 
         sd:defaultGraph [
             a sd:Graph, void:Dataset ;
             dcterms:title "DataGovIE SPARQL Endpoint Description" ;
             dcterms:description "Contains a copy of this SD+VoID file!" ;
-            void:triples 12350220 ;
+            void:triples 12350225 ;
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/void> ;
             sd:graph :VoID ;
         ] ;
         sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/cso> ;
+            sd:graph :CSO ;
+        ] ;
+        sd:namedGraph [
             sd:name <http://data-gov.ie/graph/ie-linked-data> ;
             sd:graph :IELinkedData ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/cube> ;
+            sd:name <http://purl.org/linked-data/cube> ;
             sd:graph :RDFDataCube ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx> ;
+            sd:name <http://purl.org/linked-data/sdmx> ;
             sd:graph :SDMX ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-attribute> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/attribute> ;
             sd:graph :SDMXAttribute ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-code> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/code> ;
             sd:graph :SDMXCode ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-concept> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/concept> ;
             sd:graph :SDMXConcept ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-dimension> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/dimension> ;
             sd:graph :SDMXDimension ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-measure> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/measure> ;
             sd:graph :SDMXMeasure ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-metadata> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/metadata> ;
             sd:graph :SDMXMetadata ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/sdmx-subject> ;
+            sd:name <http://purl.org/linked-data/sdmx/2009/subject> ;
             sd:graph :SDMXSubject ;
         ] ;
         sd:namedGraph [
@@ -232,62 +237,6 @@
                 dcterms:title "Extra triples" ;
                 dcterms:description "These triples don't have a proper home yet. Consider it temporary" ;
                 void:triples 15 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-birthplace> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Persons usually resident and present in the State on Census Night, classified by place of birth" ;
-                void:triples 209778 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-ethnic-background> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Usually resident population by ethnic or cultural background" ;
-                void:triples 239746 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-gender-age-and-marital-status> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Persons by sex, age and marital status" ;
-                void:triples 9111500 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-gender-and-age> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Persons aged 18 and under by sex and single year of age and persons aged 19 and over by sex" ;
-                void:triples 2203025 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-nationality> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Persons usually resident and present in the State on Census Night, classified by nationality" ;
-                void:triples 239747 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-religion> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Number of persons by religion" ;
-                void:triples 149873 ;
-            ] ;
-        ] ;
-        sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/persons-by-usual-residence> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Usually resident population aged one year and over by usual residence one year before Census Day" ;
-                void:triples 149843 ;
             ] ;
         ] ;
     ] ;

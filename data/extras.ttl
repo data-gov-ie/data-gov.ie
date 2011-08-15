@@ -4,33 +4,99 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dbr: <http://dbpedia.org/resource/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix code: <http://stats.data-gov.ie/codelist/> .
+@prefix code-birthplace: <http://stats.data-gov.ie/codelist/birthplace/> .
+@prefix code-marital: <http://stats.data-gov.ie/codelist/marital-status/> .
+@prefix code-ethnic-group: <http://stats.data-gov.ie/codelist/ethnic/> .
+@prefix ireland-county: <http://geo.data-gov.ie/county/> .
+@prefix ireland-province: <http://geo.data-gov.ie/province/> .
+@prefix ireland-city: <http://geo.data-gov.ie/city/> .
 
-<http://geo.data-gov.ie/city/cork>
+ireland-city:cork
     a wgs:Point ;
     wgs:lat "51.8987643"^^xsd:double ;
     wgs:long "-8.4712125"^^xsd:double ;
     owl:sameAs <http://dbpedia.org/resource/Cork,_Ireland> .
 
-<http://geo.data-gov.ie/city/dublin>
+ireland-city:dublin
     a wgs:Point ;
     wgs:lat "53.3492787"^^xsd:double ;
     wgs:long "-6.2611661"^^xsd:double ;
     owl:sameAs <http://dbpedia.org/resource/Dublin> .
 
-<http://geo.data-gov.ie/city/galway>
+ireland-city:galway
     a wgs:Point ;
     wgs:lat "53.2744122"^^xsd:double ;
     wgs:long "-9.0490632"^^xsd:double ;
     owl:sameAs <http://dbpedia.org/page/Galway> .
 
-<http://geo.data-gov.ie/city/limerick>
+ireland-city:limerick
     a wgs:Point ;
     wgs:lat "52.6612577"^^xsd:double ;
     wgs:long "-8.6302084"^^xsd:double ;
     owl:sameAs <http://dbpedia.org/page/Limerick> .
 
-<http://geo.data-gov.ie/city/waterford>
+ireland-city:waterford
     a wgs:Point ;
     wgs:lat "52.2591035"^^xsd:double ;
     wgs:long "-7.1137442"^^xsd:double ;
     owl:sameAs <http://dbpedia.org/page/Waterford> .
+
+code:birthplace skos:closeMatch dbr:Place_of_birth .
+code-birthplace:ireland owl:sameAs dbr:Ireland .
+code-birthplace:uk owl:sameAs dbr:United_Kingdom_of_Great_Britain_and_Ireland .
+code-birthplace:poland owl:sameAs dbr:Poland .
+code-birthplace:lithuania owl:sameAs dbr:Lithuania .
+code-birthplace:other-eu-25 owl:sameAs dbr:Member_state_of_the_European_Union .
+
+code:marital-status skos:closeMatch dbr:Marital_status .
+code-marital:single owl:sameAs dbr:Single_person .
+code-marital:married owl:sameAs dbr:Married .
+code-marital:separated owl:sameAs dbr:Separated .
+code-marital:divorced owl:sameAs dbr:Divorced .
+code-marital:widowed owl:sameAs dbr:Widow .
+
+code:ethnic-group skos:closeMatch dbr:Irish_people .
+code-ethnic-group:black owl:sameAs dbr:Black_people .
+code-ethnic-group:asian owl:sameAs dbr:Asian_people .
+code-ethnic-group:white-irish-traveller owl:sameAs dbr:Irish_Traveller .
+
+code:religion skos:closeMatch dbr:Religion .
+
+ireland-county:carlow owl:sameAs dbr:County_Carlow .
+ireland-county:carlow owl:sameAs dbr:County_Carlow .
+ireland-county:cavan owl:sameAs dbr:County_Cavan .
+ireland-county:clare owl:sameAs dbr:County_Clare .
+ireland-county:cork owl:sameAs dbr:County_Cork .
+ireland-county:donegal owl:sameAs dbr:Dun_Laoghaire-Rathdown .
+ireland-county:fingal owl:sameAs dbr:Fingal .
+ireland-county:galway owl:sameAs dbr:County_Galway .
+ireland-county:kerry owl:sameAs dbr:County_Kerry .
+ireland-county:kildare owl:sameAs dbr:County_Kildare .
+ireland-county:kilkenny owl:sameAs dbr:County_Kilkenny .
+ireland-county:laoighis owl:sameAs dbr:County_Laoighis .
+ireland-county:laois owl:sameAs dbr:County_Laois .
+ireland-county:leitrim owl:sameAs dbr:County_Leitrim .
+ireland-county:limerick owl:sameAs dbr:County_Limerick .
+ireland-county:longford owl:sameAs dbr:County_Longford .
+ireland-county:louth owl:sameAs dbr:County_Louth .
+ireland-county:mayo owl:sameAs dbr:County_Mayo .
+ireland-county:meath owl:sameAs dbr:County_Meath .
+ireland-county:monaghan owl:sameAs dbr:County_Monaghan .
+ireland-county:north-tipperary owl:sameAs dbr:North_Tipperary .
+ireland-county:offaly owl:sameAs dbr:County_Offaly .
+ireland-county:roscommon owl:sameAs dbr:County_Roscommon .
+ireland-county:sligo owl:sameAs dbr:County_Sligo .
+ireland-county:south-dublin owl:sameAs dbr:South_Dublin .
+ireland-county:south-tipperary owl:sameAs dbr:South_Tipperary .
+ireland-county:waterford owl:sameAs dbr:County_Waterford .
+ireland-county:westmeath owl:sameAs dbr:County_Westmeath .
+ireland-county:wexford owl:sameAs dbr:County_Wexford .
+ireland-county:wicklow owl:sameAs dbr:County_Wicklow .
+
+ireland-province:connacht owl:sameAs dbr:Connacht .
+ireland-province:leinster owl:sameAs dbr:Lenster .
+ireland-province:munster owl:sameAs dbr:Munster .
+ireland-province:ulster owl:sameAs dbr:Ulster .

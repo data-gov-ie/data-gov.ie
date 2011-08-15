@@ -2,28 +2,35 @@
 
 @prefix wgs: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
 
 <http://geo.data-gov.ie/city/cork>
     a wgs:Point ;
     wgs:lat "51.8987643"^^xsd:double ;
-    wgs:long "-8.4712125"^^xsd:double .
+    wgs:long "-8.4712125"^^xsd:double ;
+    owl:sameAs <http://dbpedia.org/resource/Cork,_Ireland> .
 
 <http://geo.data-gov.ie/city/dublin>
     a wgs:Point ;
     wgs:lat "53.3492787"^^xsd:double ;
-    wgs:long "-6.2611661"^^xsd:double .
+    wgs:long "-6.2611661"^^xsd:double ;
+    owl:sameAs <http://dbpedia.org/resource/Dublin> .
 
 <http://geo.data-gov.ie/city/galway>
     a wgs:Point ;
     wgs:lat "53.2744122"^^xsd:double ;
-    wgs:long "-9.0490632"^^xsd:double .
+    wgs:long "-9.0490632"^^xsd:double ;
+    owl:sameAs <http://dbpedia.org/page/Galway> .
 
 <http://geo.data-gov.ie/city/limerick>
     a wgs:Point ;
     wgs:lat "52.6612577"^^xsd:double ;
-    wgs:long "-8.6302084"^^xsd:double .
+    wgs:long "-8.6302084"^^xsd:double ;
+    owl:sameAs <http://dbpedia.org/page/Limerick> .
 
 <http://geo.data-gov.ie/city/waterford>
     a wgs:Point ;
     wgs:lat "52.2591035"^^xsd:double ;
-    wgs:long "-7.1137442"^^xsd:double .
+    wgs:long "-7.1137442"^^xsd:double ;
+    owl:sameAs <http://dbpedia.org/page/Waterford> .

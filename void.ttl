@@ -10,34 +10,36 @@
 @prefix : <http://data-gov.ie/void.ttl#> .
 
 
-<http://data-gov.ie/void.ttl> a void:DatasetDescription ;
+<http://data-gov.ie/void.ttl>
+    a void:DatasetDescription ;
     dcterms:title "A VoiD Description of the DataGov.IE Dataset" ;
     dcterms:creator <http://csarven.ca/#i> ;
     foaf:primaryTopic :DataGovIE .
 
 
-:DataGovIE rdf:type void:Dataset ;
+:DataGovIE
+    rdf:type void:Dataset ;
     foaf:homepage <http://data-gov.ie/> ;
     dcterms:title "Irish Government Data" ;
     dcterms:description "Irish Government Data" ;
-    void:subset :VoID ;
-    void:subset :CSO ;
-    void:subset :IELinkedData ;
-    void:subset :RDFDataCube ;
-    void:subset :SDMX ;
-    void:subset :SDMXAttribute ;
-    void:subset :SDMXCode ;
-    void:subset :SDMXConcept ;
-    void:subset :SDMXDimension ;
-    void:subset :SDMXMeasure ;
-    void:subset :SDMXMetadata ;
-    void:subset :SDMXSubject .
-
+    void:subset :VoID ,
+                :CSO ,
+                :IELinkedData ,
+                :RDFDataCube ,
+                :SDMX ,
+                :SDMXAttribute ,
+                :SDMXCode ,
+                :SDMXConcept ,
+                :SDMXDimension ,
+                :SDMXMeasure ,
+                :SDMXMetadata ,
+                :SDMXSubject ,
+                :Extras .
 
 :VoID
     a sd:Graph, void:Dataset ;
     dcterms:title "SD+VoID triples" ;
-    void:triples 185 ;
+    void:triples 193 ;
     void:dataDump <http://data-gov.ie/void.ttl> .
 
 :CSO
@@ -67,6 +69,7 @@
 
     void:sparqlEndpoint <http://data-gov.ie/sparql> ;
     void:dataDump <http://data-gov.ie/data/cso-dataset.tar.gz> ;
+    void:triples 12303512 ;
 
     void:feature <http://www.w3.org/ns/formats/RDF_XML> ,
                  <http://www.w3.org/ns/formats/Turtle> ;
@@ -75,12 +78,10 @@
 
     void:exampleResource <http://geo.data-gov.ie/Province> ,
                          <http://geo.data-gov.ie/city/galway> ,
-                         <http://stats.data-gov.ie/codelist/birthplace> ;
-
-    void:triples 12303513 .
+                         <http://stats.data-gov.ie/codelist/birthplace> .
 
 
-:CSO_DBpedia
+:IELinkedData_DBpedia
     a void:Linkset ;
     void:target :CSO ;
     void:target :DBpedia ;
@@ -89,6 +90,14 @@
     void:objectsTarget :DBpedia ;
     void:triples 1 .
 
+:Extras_DBpedia
+    a void:Linkset ;
+    void:target :Extras ;
+    void:target :DBpedia ;
+    void:linkPredicate owl:sameAs ;
+    void:subjectsTarget :Extras ;
+    void:objectsTarget :DBpedia ;
+    void:triples 51 .
 
 :DBpedia
     rdf:type void:Dataset ;
@@ -106,7 +115,7 @@
     dcterms:title "RDF Data Cube vocabulary" ;
     dcterms:description "Purpose of this is to have a local cached copy" ;
     foaf:homepage <http://publishing-statistical-data.googlecode.com/svn/trunk/specs/src/main/html/cube.html> ;
-    void:triples 233 ;
+    void:triples 235 ;
     void:dataDump <http://purl.org/linked-data/cube> .
 
 :SDMX
@@ -165,6 +174,12 @@
     void:triples 295 ;
     void:dataDump <http://purl.org/linked-data/sdmx/2009/subject> .
 
+:Extras
+    a sd:Graph, void:Dataset ;
+    dcterms:title "Extra triples" ;
+    dcterms:description "These triples don't have a proper home yet." ;
+    void:triples 70 .
+
 :service
     a sd:Service ;
     sd:endpoint <http://data-gov.ie/sparql> ;
@@ -174,13 +189,13 @@
         a sd:Dataset;
         dcterms:title "DataGoVIE" ;
         dcterms:description "Irish government data" ;
-        void:triples 12350225 ;
+        void:triples 12307793 ;
 
         sd:defaultGraph [
             a sd:Graph, void:Dataset ;
             dcterms:title "DataGovIE SPARQL Endpoint Description" ;
             dcterms:description "Contains a copy of this SD+VoID file!" ;
-            void:triples 12350225 ;
+            void:triples 12307793 ;
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/void> ;
@@ -232,12 +247,7 @@
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/extras> ;
-            sd:graph [
-                a sd:Graph, void:Dataset ;
-                dcterms:title "Extra triples" ;
-                dcterms:description "These triples don't have a proper home yet. Consider it temporary" ;
-                void:triples 71 ;
-            ] ;
+            sd:graph :Extras ;
         ] ;
     ] ;
     .

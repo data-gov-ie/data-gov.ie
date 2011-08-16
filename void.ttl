@@ -37,7 +37,7 @@
 :VoID
     a sd:Graph, void:Dataset ;
     dcterms:title "SD+VoID triples" ;
-    void:triples 230 ;
+    void:triples 185 ;
     void:dataDump <http://data-gov.ie/void.ttl> .
 
 :CSO
@@ -236,7 +236,7 @@
                 a sd:Graph, void:Dataset ;
                 dcterms:title "Extra triples" ;
                 dcterms:description "These triples don't have a proper home yet. Consider it temporary" ;
-                void:triples 15 ;
+                void:triples 71 ;
             ] ;
         ] ;
     ] ;

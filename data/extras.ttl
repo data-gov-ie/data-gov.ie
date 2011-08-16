@@ -66,7 +66,6 @@ code-ethnic-group:white-irish-traveller owl:sameAs dbr:Irish_Traveller .
 code:religion skos:closeMatch dbr:Religion .
 
 ireland-county:carlow owl:sameAs dbr:County_Carlow .
-ireland-county:carlow owl:sameAs dbr:County_Carlow .
 ireland-county:cavan owl:sameAs dbr:County_Cavan .
 ireland-county:clare owl:sameAs dbr:County_Clare .
 ireland-county:cork owl:sameAs dbr:County_Cork .

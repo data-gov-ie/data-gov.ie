@@ -13,7 +13,7 @@ header ('Content-type:text/html; charset=utf-8');
 
     <p><b>SPARQL Query</b></p>
     <div class="moreindent">
-      <form action="/sparql" method="get">
+      <form action="/sparql" method="post" accept-charset="UTF-8">
         <textarea  style="background-color: #F0F0F0;" name="query" cols="100" rows="40">
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -67,7 +67,7 @@ PREFIX void: <http://rdfs.org/ns/void#>
 
     <p><b>SPARQL Update</b></p>
     <div class="moreindent">
-      <form action="/update" method="post">
+      <form action="/update" method="post" accept-charset="UTF-8">
         <textarea style="background-color: #F0F0F0;" name="update" cols="70" rows="10"></textarea>
 	    <br/>
         <input type="submit" value="Perform update" />

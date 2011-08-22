@@ -39,7 +39,7 @@
 :VoID
     a sd:Graph, void:Dataset ;
     dcterms:title "SD+VoID triples" ;
-    void:triples 193 ;
+    void:triples 194 ;
     void:dataDump <http://data-gov.ie/void.ttl> .
 
 :CSO
@@ -178,7 +178,8 @@
     a sd:Graph, void:Dataset ;
     dcterms:title "Extra triples" ;
     dcterms:description "These triples don't have a proper home yet." ;
-    void:triples 70 .
+    void:triples 70 ;
+    void:dataDump <http://data-gov.ie/data/extras.ttl> .
 
 :service
     a sd:Service ;
@@ -189,13 +190,13 @@
         a sd:Dataset;
         dcterms:title "DataGoVIE" ;
         dcterms:description "Irish government data" ;
-        void:triples 12307793 ;
+        void:triples 12307794 ;
 
         sd:defaultGraph [
             a sd:Graph, void:Dataset ;
             dcterms:title "DataGovIE SPARQL Endpoint Description" ;
             dcterms:description "Contains a copy of this SD+VoID file!" ;
-            void:triples 12307793 ;
+            void:triples 12307794 ;
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/void> ;

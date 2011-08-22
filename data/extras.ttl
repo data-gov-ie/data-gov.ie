@@ -24,25 +24,25 @@ ireland-city:dublin
     a wgs:Point ;
     wgs:lat "53.3492787"^^xsd:double ;
     wgs:long "-6.2611661"^^xsd:double ;
-    owl:sameAs <http://dbpedia.org/resource/Dublin> .
+    owl:sameAs dbr:Dublin .
 
 ireland-city:galway
     a wgs:Point ;
     wgs:lat "53.2744122"^^xsd:double ;
     wgs:long "-9.0490632"^^xsd:double ;
-    owl:sameAs <http://dbpedia.org/page/Galway> .
+    owl:sameAs dbr:Galway .
 
 ireland-city:limerick
     a wgs:Point ;
     wgs:lat "52.6612577"^^xsd:double ;
     wgs:long "-8.6302084"^^xsd:double ;
-    owl:sameAs <http://dbpedia.org/page/Limerick> .
+    owl:sameAs dbr:Limerick .
 
 ireland-city:waterford
     a wgs:Point ;
     wgs:lat "52.2591035"^^xsd:double ;
     wgs:long "-7.1137442"^^xsd:double ;
-    owl:sameAs <http://dbpedia.org/page/Waterford> .
+    owl:sameAs dbr:Waterford .
 
 code:birthplace skos:closeMatch dbr:Place_of_birth .
 code-birthplace:ireland owl:sameAs dbr:Ireland .

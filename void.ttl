@@ -24,6 +24,7 @@
     dcterms:description "Irish Government Data" ;
     void:subset :VoID ,
                 :CSO ,
+                :SII ,
                 :IELinkedData ,
                 :RDFDataCube ,
                 :SDMX ,
@@ -39,7 +40,7 @@
 :VoID
     a sd:Graph, void:Dataset ;
     dcterms:title "SD+VoID triples" ;
-    void:triples 194 ;
+    void:triples 228 ;
     void:dataDump <http://data-gov.ie/void.ttl> .
 
 :CSO
@@ -52,12 +53,13 @@
 
     void:vocabulary <http://purl.org/linked-data/cube> ,
                     <http://purl.org/linked-data/sdmx> ,
+                    <http://purl.org/linked-data/sdmx/2009/attribute> ,
                     <http://purl.org/linked-data/sdmx/2009/code> ,
                     <http://purl.org/linked-data/sdmx/2009/concept> ,
                     <http://purl.org/linked-data/sdmx/2009/dimension> ,
                     <http://purl.org/linked-data/sdmx/2009/subject> ,
                     <http://purl.org/linked-data/sdmx/2009/measure> ,
-
+                    <http://purl.org/linked-data/sdmx/2009/metadata> ,
                     <http://reference.data.gov.uk/id/year/> ,
                     <http://stats.data-gov.ie/codelist/age2/> ,
                     <http://www.w3.org/2004/02/skos/core> ;
@@ -69,7 +71,7 @@
 
     void:sparqlEndpoint <http://data-gov.ie/sparql> ;
     void:dataDump <http://data-gov.ie/data/cso-dataset.tar.gz> ;
-    void:triples 12303512 ;
+    void:triples 12303514 ;
 
     void:feature <http://www.w3.org/ns/formats/RDF_XML> ,
                  <http://www.w3.org/ns/formats/Turtle> ;
@@ -103,6 +105,37 @@
     rdf:type void:Dataset ;
     foaf:homepage <http://dbpedia.org/> .
 
+:SII
+    a sd:Graph,	void:Dataset ;
+    dcterms:title "Service Indicators of Ireland" ;
+    dcterms:description "Local Government Computer Services Board (2009)" ;
+    dcterms:source [ foaf:homepage <http://www.lgmsb.ie/Service_Indicators_Reports.aspx> ] ;
+    dcterms:publisher [ foaf:homepage <http://deri.ie/> ] ;
+    dcterms:creator <http://mayor2.dia.fi.upm.es/oeg-upm/index.php/es/phd/39-bvillazon> ;
+    dcterms:created "2011-08-08"^^xsd:date ;
+
+    void:vocabulary <http://purl.org/linked-data/cube> ,
+                    <http://purl.org/linked-data/sdmx> ,
+                    <http://purl.org/linked-data/sdmx/2009/code> ,
+                    <http://purl.org/linked-data/sdmx/2009/concept> ,
+                    <http://purl.org/linked-data/sdmx/2009/dimension> ,
+                    <http://purl.org/linked-data/sdmx/2009/subject> ,
+                    <http://purl.org/linked-data/sdmx/2009/measure> ,
+                    <http://purl.org/linked-data/sdmx/2009/metadata> ,
+                    <http://reference.data.gov.uk/id/year/> ,
+                    <http://www.w3.org/2004/02/skos/core> ;
+
+    void:sparqlEndpoint <http://data-gov.ie/sparql> ;
+    void:dataDump <http://data-gov.ie/data/sii-dataset.tar.gz> ;
+
+    void:feature <http://www.w3.org/ns/formats/RDF_XML> ,
+                 <http://www.w3.org/ns/formats/Turtle> ;
+
+    void:exampleResource <http://stats.data-gov.ie/concept/c-1-4> ,
+                         <http://stats.data-gov.ie/property/rev-2-2> ,
+                         <http://stats.data-gov.ie/data/r-1-2/2009/county/kilkenny> ;
+
+    void:triples 40938 .
 
 :IELinkedData
     a sd:Graph, void:Dataset ;
@@ -190,13 +223,13 @@
         a sd:Dataset;
         dcterms:title "DataGoVIE" ;
         dcterms:description "Irish government data" ;
-        void:triples 12307794 ;
+        void:triples 12307796 ;
 
         sd:defaultGraph [
             a sd:Graph, void:Dataset ;
             dcterms:title "DataGovIE SPARQL Endpoint Description" ;
             dcterms:description "Contains a copy of this SD+VoID file!" ;
-            void:triples 12307794 ;
+            void:triples 12307796 ;
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/void> ;
@@ -205,6 +238,10 @@
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/cso> ;
             sd:graph :CSO ;
+        ] ;
+        sd:namedGraph [
+            sd:name <http://data-gov.ie/graph/ssi> ;
+            sd:graph :SII ;
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/ie-linked-data> ;

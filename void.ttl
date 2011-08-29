@@ -135,7 +135,7 @@
                          <http://stats.data-gov.ie/property/rev-2-2> ,
                          <http://stats.data-gov.ie/data/r-1-2/2009/county/kilkenny> ;
 
-    void:triples 40938 .
+    void:triples 40937 .
 
 :IELinkedData
     a sd:Graph, void:Dataset ;
@@ -223,13 +223,13 @@
         a sd:Dataset;
         dcterms:title "DataGoVIE" ;
         dcterms:description "Irish government data" ;
-        void:triples 12307796 ;
+        void:triples 12390973 ;
 
         sd:defaultGraph [
             a sd:Graph, void:Dataset ;
             dcterms:title "DataGovIE SPARQL Endpoint Description" ;
             dcterms:description "Contains a copy of this SD+VoID file!" ;
-            void:triples 12307796 ;
+            void:triples 12390973 ;
         ] ;
         sd:namedGraph [
             sd:name <http://data-gov.ie/graph/void> ;
@@ -240,7 +240,7 @@
             sd:graph :CSO ;
         ] ;
         sd:namedGraph [
-            sd:name <http://data-gov.ie/graph/ssi> ;
+            sd:name <http://data-gov.ie/graph/sii> ;
             sd:graph :SII ;
         ] ;
         sd:namedGraph [

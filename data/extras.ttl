@@ -12,6 +12,9 @@
 @prefix ireland-province: <http://geo.data-gov.ie/province/> .
 @prefix ireland-city: <http://geo.data-gov.ie/city/> .
 
+<http://geo.data-gov.ie/roi>
+	owl:sameAs dbr:Republic_of_Ireland .
+
 ireland-city:cork
     a wgs:Point ;
     wgs:lat "51.8987643"^^xsd:double ;
